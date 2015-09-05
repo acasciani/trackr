@@ -1,0 +1,59 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="UserManagementModelStoreContainer" CdmEntityContainer="UserManagementEntities">
+    <EntitySetMapping Name="Permissions">
+      <EntityTypeMapping TypeName="UserManagementModel.Permission">
+        <MappingFragment StoreEntitySet="Permissions">
+          <ScalarProperty Name="PermissionID" ColumnName="PermissionID" />
+          <ScalarProperty Name="PermissionName" ColumnName="PermissionName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Roles">
+      <EntityTypeMapping TypeName="UserManagementModel.Role">
+        <MappingFragment StoreEntitySet="Roles">
+          <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+          <ScalarProperty Name="RoleName" ColumnName="RoleName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ScopeAssignments">
+      <EntityTypeMapping TypeName="UserManagementModel.ScopeAssignment">
+        <MappingFragment StoreEntitySet="ScopeAssignments">
+          <ScalarProperty Name="ScopeAssignmentID" ColumnName="ScopeAssignmentID" />
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+          <ScalarProperty Name="PermissionID" ColumnName="PermissionID" />
+          <ScalarProperty Name="ScopeID" ColumnName="ScopeID" />
+          <ScalarProperty Name="ResourceID" ColumnName="ResourceID" />
+          <ScalarProperty Name="IsDeny" ColumnName="IsDeny" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Scopes">
+      <EntityTypeMapping TypeName="UserManagementModel.Scope">
+        <MappingFragment StoreEntitySet="Scopes">
+          <ScalarProperty Name="ScopeID" ColumnName="ScopeID" />
+          <ScalarProperty Name="ScopeName" ColumnName="ScopeName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="WebUsers">
+      <EntityTypeMapping TypeName="UserManagementModel.WebUser">
+        <MappingFragment StoreEntitySet="WebUsers">
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="RolePermissions" TypeName="UserManagementModel.RolePermissions" StoreEntitySet="RolePermissions">
+      <EndProperty Name="Permissions">
+        <ScalarProperty Name="PermissionID" ColumnName="PermissionID" />
+      </EndProperty>
+      <EndProperty Name="Roles">
+        <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+      </EndProperty>
+    </AssociationSetMapping>
+  </EntityContainerMapping>
+</Mapping>

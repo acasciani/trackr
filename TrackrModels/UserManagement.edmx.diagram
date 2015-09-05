@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="e08ae7a265c9460a89facb3f009e82d2" Name="Diagram1">
+        <EntityTypeShape EntityType="UserManagementModel.Permission" Width="1.5" PointX="0.75" PointY="3.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="UserManagementModel.Role" Width="1.5" PointX="3" PointY="3.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="UserManagementModel.ScopeAssignment" Width="1.5" PointX="5.25" PointY="3.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="UserManagementModel.Scope" Width="1.5" PointX="3" PointY="1.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="UserManagementModel.WebUser" Width="1.5" PointX="7.625" PointY="3.75" IsExpanded="true" />
+        <AssociationConnector Association="UserManagementModel.FK_ScopeAssignments_Permissions" ManuallyRouted="false" />
+        <AssociationConnector Association="UserManagementModel.FK_ScopeAssignments_Roles" ManuallyRouted="false" />
+        <AssociationConnector Association="UserManagementModel.FK_ScopeAssignments_ScopeAssignments" ManuallyRouted="false" />
+        <AssociationConnector Association="UserManagementModel.FK_ScopeAssignments_Scopes" ManuallyRouted="false" />
+        <AssociationConnector Association="UserManagementModel.RolePermissions" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

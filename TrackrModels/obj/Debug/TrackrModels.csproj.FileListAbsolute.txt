@@ -1,0 +1,10 @@
+C:\dev\Soccer\Trackr\TrackrModels\bin\Debug\TrackrModels.dll.config
+C:\dev\Soccer\Trackr\TrackrModels\bin\Debug\TrackrModels.dll
+C:\dev\Soccer\Trackr\TrackrModels\bin\Debug\TrackrModels.pdb
+C:\dev\Soccer\Trackr\TrackrModels\bin\Debug\EntityFramework.dll
+C:\dev\Soccer\Trackr\TrackrModels\bin\Debug\EntityFramework.SqlServer.dll
+C:\dev\Soccer\Trackr\TrackrModels\bin\Debug\EntityFramework.xml
+C:\dev\Soccer\Trackr\TrackrModels\bin\Debug\EntityFramework.SqlServer.xml
+C:\dev\Soccer\Trackr\TrackrModels\obj\Debug\TrackrModels.dll
+C:\dev\Soccer\Trackr\TrackrModels\obj\Debug\TrackrModels.pdb
+C:\dev\Soccer\Trackr\TrackrModels\obj\Debug\TrackrModels.csprojResolveAssemblyReference.cache

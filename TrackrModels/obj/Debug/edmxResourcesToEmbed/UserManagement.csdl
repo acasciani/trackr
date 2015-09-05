@@ -1,0 +1,133 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="UserManagementModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Permission">
+    <Key>
+      <PropertyRef Name="PermissionID" />
+    </Key>
+    <Property Name="PermissionID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="PermissionName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="ScopeAssignments" Relationship="Self.FK_ScopeAssignments_Permissions" FromRole="Permissions" ToRole="ScopeAssignments" />
+    <NavigationProperty Name="Roles" Relationship="Self.RolePermissions" FromRole="Permissions" ToRole="Roles" />
+  </EntityType>
+  <EntityType Name="Role">
+    <Key>
+      <PropertyRef Name="RoleID" />
+    </Key>
+    <Property Name="RoleID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="RoleName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="ScopeAssignments" Relationship="Self.FK_ScopeAssignments_Roles" FromRole="Roles" ToRole="ScopeAssignments" />
+    <NavigationProperty Name="Permissions" Relationship="Self.RolePermissions" FromRole="Roles" ToRole="Permissions" />
+  </EntityType>
+  <EntityType Name="ScopeAssignment">
+    <Key>
+      <PropertyRef Name="ScopeAssignmentID" />
+    </Key>
+    <Property Name="ScopeAssignmentID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserID" Type="Int32" Nullable="false" />
+    <Property Name="RoleID" Type="Int32" />
+    <Property Name="PermissionID" Type="Int32" />
+    <Property Name="ScopeID" Type="Int32" Nullable="false" />
+    <Property Name="ResourceID" Type="Int32" Nullable="false" />
+    <Property Name="IsDeny" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="Permission" Relationship="Self.FK_ScopeAssignments_Permissions" FromRole="ScopeAssignments" ToRole="Permissions" />
+    <NavigationProperty Name="Role" Relationship="Self.FK_ScopeAssignments_Roles" FromRole="ScopeAssignments" ToRole="Roles" />
+    <NavigationProperty Name="WebUser" Relationship="Self.FK_ScopeAssignments_ScopeAssignments" FromRole="ScopeAssignments" ToRole="WebUsers" />
+    <NavigationProperty Name="Scope" Relationship="Self.FK_ScopeAssignments_Scopes" FromRole="ScopeAssignments" ToRole="Scopes" />
+  </EntityType>
+  <EntityType Name="Scope">
+    <Key>
+      <PropertyRef Name="ScopeID" />
+    </Key>
+    <Property Name="ScopeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ScopeName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="ScopeAssignments" Relationship="Self.FK_ScopeAssignments_Scopes" FromRole="Scopes" ToRole="ScopeAssignments" />
+  </EntityType>
+  <EntityType Name="WebUser">
+    <Key>
+      <PropertyRef Name="UserID" />
+    </Key>
+    <Property Name="UserID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Email" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Password" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="ScopeAssignments" Relationship="Self.FK_ScopeAssignments_ScopeAssignments" FromRole="WebUsers" ToRole="ScopeAssignments" />
+  </EntityType>
+  <Association Name="FK_ScopeAssignments_Permissions">
+    <End Role="Permissions" Type="Self.Permission" Multiplicity="0..1" />
+    <End Role="ScopeAssignments" Type="Self.ScopeAssignment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Permissions">
+        <PropertyRef Name="PermissionID" />
+      </Principal>
+      <Dependent Role="ScopeAssignments">
+        <PropertyRef Name="PermissionID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ScopeAssignments_Roles">
+    <End Role="Roles" Type="Self.Role" Multiplicity="0..1" />
+    <End Role="ScopeAssignments" Type="Self.ScopeAssignment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Roles">
+        <PropertyRef Name="RoleID" />
+      </Principal>
+      <Dependent Role="ScopeAssignments">
+        <PropertyRef Name="RoleID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ScopeAssignments_ScopeAssignments">
+    <End Role="WebUsers" Type="Self.WebUser" Multiplicity="1" />
+    <End Role="ScopeAssignments" Type="Self.ScopeAssignment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="WebUsers">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="ScopeAssignments">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ScopeAssignments_Scopes">
+    <End Role="Scopes" Type="Self.Scope" Multiplicity="1" />
+    <End Role="ScopeAssignments" Type="Self.ScopeAssignment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Scopes">
+        <PropertyRef Name="ScopeID" />
+      </Principal>
+      <Dependent Role="ScopeAssignments">
+        <PropertyRef Name="ScopeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="RolePermissions">
+    <End Role="Permissions" Type="Self.Permission" Multiplicity="*" />
+    <End Role="Roles" Type="Self.Role" Multiplicity="*" />
+  </Association>
+  <EntityContainer Name="UserManagementEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Permissions" EntityType="Self.Permission" />
+    <EntitySet Name="Roles" EntityType="Self.Role" />
+    <EntitySet Name="ScopeAssignments" EntityType="Self.ScopeAssignment" />
+    <EntitySet Name="Scopes" EntityType="Self.Scope" />
+    <EntitySet Name="WebUsers" EntityType="Self.WebUser" />
+    <AssociationSet Name="FK_ScopeAssignments_Permissions" Association="Self.FK_ScopeAssignments_Permissions">
+      <End Role="Permissions" EntitySet="Permissions" />
+      <End Role="ScopeAssignments" EntitySet="ScopeAssignments" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ScopeAssignments_Roles" Association="Self.FK_ScopeAssignments_Roles">
+      <End Role="Roles" EntitySet="Roles" />
+      <End Role="ScopeAssignments" EntitySet="ScopeAssignments" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ScopeAssignments_ScopeAssignments" Association="Self.FK_ScopeAssignments_ScopeAssignments">
+      <End Role="WebUsers" EntitySet="WebUsers" />
+      <End Role="ScopeAssignments" EntitySet="ScopeAssignments" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ScopeAssignments_Scopes" Association="Self.FK_ScopeAssignments_Scopes">
+      <End Role="Scopes" EntitySet="Scopes" />
+      <End Role="ScopeAssignments" EntitySet="ScopeAssignments" />
+    </AssociationSet>
+    <AssociationSet Name="RolePermissions" Association="Self.RolePermissions">
+      <End Role="Permissions" EntitySet="Permissions" />
+      <End Role="Roles" EntitySet="Roles" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
