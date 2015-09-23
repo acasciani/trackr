@@ -10,14 +10,18 @@ using System.Web.Http;
 
 namespace Trackr
 {
-    public class Global : HttpApplication
+    public partial class Global : HttpApplication
     {
         void Application_Start(object sender, EventArgs e)
         {
+           this.ConfigureWebApi();
+
             // Code that runs on application startup
             GlobalConfiguration.Configure(WebApiConfig.Register);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+
+            GlobalConfiguration.Configuration.EnsureInitialized();
         }
     }
 }

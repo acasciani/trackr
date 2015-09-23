@@ -5,11 +5,11 @@ using System.Web;
 using System.Web.Http;
 using TrackrModels;
 
-namespace Trackr.Controllers
+namespace Trackr
 {
-    public partial class WebUsersController : ApiController, IScopable<WebUser, int>
+    public partial class WebUsersController : OpenAccessBaseApiController<TrackrModels.WebUser, TrackrModels.UserManagement>, IScopable<WebUser, int>
     {
-        [Route("api/WebUsersController/GetScoped/{UserID}/{permission}")]
+        [Route("api/WebUsers/GetScoped/{UserID}/{permission}")]
         [HttpGet]
         public List<WebUser> GetScopedEntities(int UserID, string permission)
         {
@@ -39,6 +39,38 @@ namespace Trackr.Controllers
             return ids;
         }
 
+        public WebUser GetScopedEntity(int UserID, string permission, int entityID)
+        {
+            ScopeController sc = new ScopeController();
+            var assignments = sc.GetScopeAssignments(UserID, permission);
+
+            foreach (ScopeAssignment assignment in assignments)
+            {
+                if (GetScopedIDs(assignment).Contains(entityID))
+                {
+                    return Get(entityID);
+                }
+            }
+
+            return null;
+        }
+
+        public bool IsUserScoped(int UserID, string permission, int entityID)
+        {
+            ScopeController sc = new ScopeController();
+            var assignments = sc.GetScopeAssignments(UserID, permission);
+
+            foreach (ScopeAssignment assignment in assignments)
+            {
+                if (GetScopedIDs(assignment).Contains(entityID))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
         private List<int> GetScopedIDs(ScopeAssignment scopeAssignment)
         {
             List<int> userIDs = new List<int>();
@@ -46,7 +78,7 @@ namespace Trackr.Controllers
             switch (scopeAssignment.Scope.ScopeName)
             {
                 case "Club": // highest level
-                    userIDs.AddRange(db.WebUsers.Select(i => i.UserID));
+                    userIDs.AddRange(Get().Select(i => i.UserID));
                     break;
 
                 default: break;
@@ -58,7 +90,7 @@ namespace Trackr.Controllers
         private IQueryable<WebUser> GetScopedEntities(ScopeAssignment scopeAssignment)
         {
             List<int> scopedIDs = GetScopedIDs(scopeAssignment);
-            return db.WebUsers.Where(i => scopedIDs.Contains(i.UserID));
+            return Get().Where(i => scopedIDs.Contains(i.UserID));
         }
     }
 }

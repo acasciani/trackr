@@ -48,64 +48,42 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="Telerik.OpenAccess, Version=2014.2.711.1, Culture=neutral, PublicKeyToken=7ce17eeaf1d59342, processorArchitecture=MSIL" />
+    <Reference Include="Telerik.OpenAccess.35.Extensions, Version=2014.2.711.1, Culture=neutral, PublicKeyToken=7ce17eeaf1d59342, processorArchitecture=MSIL" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Permission.cs">
-      <DependentUpon>UserManagement.tt</DependentUpon>
+    <Compile Include="Permission.generated.cs">
+      <DependentUpon>UserManagement.rlinq</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Role.cs">
-      <DependentUpon>UserManagement.tt</DependentUpon>
+    <Compile Include="Role.generated.cs">
+      <DependentUpon>UserManagement.rlinq</DependentUpon>
     </Compile>
-    <Compile Include="Scope.cs">
-      <DependentUpon>UserManagement.tt</DependentUpon>
+    <Compile Include="Scope.generated.cs">
+      <DependentUpon>UserManagement.rlinq</DependentUpon>
     </Compile>
-    <Compile Include="ScopeAssignment.cs">
-      <DependentUpon>UserManagement.tt</DependentUpon>
+    <Compile Include="ScopeAssignment.generated.cs">
+      <DependentUpon>UserManagement.rlinq</DependentUpon>
     </Compile>
-    <Compile Include="UserManagement.Context.cs">
+    <Compile Include="UserManagement1.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>UserManagement.Context.tt</DependentUpon>
+      <DependentUpon>UserManagement.rlinq</DependentUpon>
     </Compile>
-    <Compile Include="UserManagement.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>UserManagement.tt</DependentUpon>
+    <Compile Include="WebUser.generated.cs">
+      <DependentUpon>UserManagement.rlinq</DependentUpon>
     </Compile>
-    <Compile Include="UserManagement.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>UserManagement.edmx</DependentUpon>
-    </Compile>
-    <Compile Include="WebUser.cs">
-      <DependentUpon>UserManagement.tt</DependentUpon>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <EntityDeploy Include="UserManagement.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>UserManagement.Designer.cs</LastGenOutput>
-    </EntityDeploy>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.Config" />
     <None Include="packages.config" />
-    <None Include="UserManagement.edmx.diagram">
-      <DependentUpon>UserManagement.edmx</DependentUpon>
+    <None Include="UserManagement.rlinq.diagram">
+      <DependentUpon>UserManagement.rlinq</DependentUpon>
     </None>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="UserManagement.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>UserManagement.edmx</DependentUpon>
-      <LastGenOutput>UserManagement.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="UserManagement.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>UserManagement.edmx</DependentUpon>
-      <LastGenOutput>UserManagement.cs</LastGenOutput>
-    </Content>
+    <OpenAccessDeploy Include="UserManagement.rlinq">
+      <Generator>MetaModelCodeGenerator</Generator>
+      <LastGenOutput>UserManagement1.cs</LastGenOutput>
+    </OpenAccessDeploy>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
@@ -118,4 +96,5 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+  <Import Condition="Exists('$(MSBuildExtensionsPath)\OpenAccess.targets')" Project="$(MSBuildExtensionsPath)\OpenAccess.targets" />
 </Project>

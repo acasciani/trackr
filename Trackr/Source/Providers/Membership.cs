@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading;
@@ -9,7 +10,6 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
 using System.Web.Security;
-using Trackr.Controllers;
 using TrackrModels;
 
 namespace Trackr.Source.Providers
@@ -44,17 +44,26 @@ namespace Trackr.Source.Providers
         {
             using (WebUsersController wuc = new WebUsersController())
             {
-                string encryptedPw = BytesToString(EncryptPassword(StringToBytes(password)));
+                byte[] encryptedPw = EncryptPassword(StringToBytes(password));
 
-                WebUser addedUser = wuc.AddNew(new WebUser()
+                WebUser user = new WebUser()
                 {
                     Email = username,
                     Password = encryptedPw,
-                });
+                };
 
-                status = MembershipCreateStatus.Success;
+                HttpResponseMessage addedUserResponse = wuc.Post(user);
 
-                return WebUserToMembershipUser(addedUser);
+                switch (addedUserResponse.StatusCode)
+                {
+                    case HttpStatusCode.Accepted:
+                        status = MembershipCreateStatus.Success;
+                        return WebUserToMembershipUser(user);
+
+                    default:
+                        status = MembershipCreateStatus.ProviderError;
+                        return null;
+                }
             }
         }
 
@@ -97,7 +106,7 @@ namespace Trackr.Source.Providers
         {
             using (WebUsersController wuc = new WebUsersController())
             {
-                return wuc.GetWebUsers().First(i => i.Email == username).Password;
+                return BytesToString(DecryptPassword(wuc.Get().First(i => i.Email == username).Password));
             }
         }
 
@@ -105,7 +114,7 @@ namespace Trackr.Source.Providers
         {
             using (WebUsersController wuc = new WebUsersController())
             {
-                return WebUserToMembershipUser(wuc.GetWebUsers().First(i => i.Email == username));
+                return WebUserToMembershipUser(wuc.Get().First(i => i.Email == username));
             }
         }
 
@@ -116,7 +125,7 @@ namespace Trackr.Source.Providers
 
             using (WebUsersController wuc = new WebUsersController())
             {
-                return WebUserToMembershipUser(wuc.GetWebUsers().First(i => i.UserID == userID.Value));
+                return WebUserToMembershipUser(wuc.Get().First(i => i.UserID == userID.Value));
             }
         }
 
@@ -181,9 +190,9 @@ namespace Trackr.Source.Providers
 
             using (WebUsersController wuc = new WebUsersController())
             {
-                WebUser webUser = wuc.GetWebUsers().First(i => i.UserID == userID.Value);
+                WebUser webUser = wuc.Get().First(i => i.UserID == userID.Value);
                 webUser.Email = user.Email;
-                wuc.Update(webUser);
+                wuc.Put(userID.Value, webUser);
             }
         }
 
