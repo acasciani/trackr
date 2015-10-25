@@ -7,7 +7,6 @@ C:\dev\Soccer\Trackr\TrackrModels\bin\Debug\EntityFramework.xml
 C:\dev\Soccer\Trackr\TrackrModels\bin\Debug\EntityFramework.SqlServer.xml
 C:\dev\Soccer\Trackr\TrackrModels\obj\Debug\TrackrModels.dll
 C:\dev\Soccer\Trackr\TrackrModels\obj\Debug\TrackrModels.pdb
-C:\dev\Soccer\Trackr\TrackrModels\obj\Debug\TrackrModels.csprojResolveAssemblyReference.cache
 C:\dev\trackr\TrackrModels\obj\Debug\TrackrModels.dll
 C:\dev\trackr\TrackrModels\obj\Debug\TrackrModels.pdb
 C:\dev\trackr\TrackrModels\bin\Debug\TrackrModels.dll.config
@@ -19,3 +18,11 @@ C:\dev\trackr\TrackrModels\bin\Debug\EntityFramework.xml
 C:\dev\trackr\TrackrModels\bin\Debug\EntityFramework.SqlServer.xml
 C:\dev\trackr\TrackrModels\bin\Debug\Telerik.OpenAccess.35.Extensions.dll
 C:\dev\trackr\TrackrModels\bin\Debug\Telerik.OpenAccess.35.Extensions.xml
+C:\dev\Soccer\trackr\TrackrModels\bin\Debug\Telerik.OpenAccess.35.Extensions.dll
+C:\dev\Soccer\trackr\TrackrModels\bin\Debug\Telerik.OpenAccess.DataServices.dll
+C:\dev\Soccer\trackr\TrackrModels\bin\Debug\Telerik.OpenAccess.dll
+C:\dev\Soccer\trackr\TrackrModels\bin\Debug\Telerik.OpenAccess.Web.dll
+C:\dev\Soccer\trackr\TrackrModels\bin\Debug\Telerik.OpenAccess.xml
+C:\dev\Soccer\trackr\TrackrModels\bin\Debug\Telerik.OpenAccess.35.Extensions.xml
+C:\dev\Soccer\trackr\TrackrModels\bin\Debug\Telerik.OpenAccess.Web.xml
+C:\dev\Soccer\trackr\TrackrModels\bin\Debug\Telerik.OpenAccess.Runtime.dll

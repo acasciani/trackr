@@ -120,3 +120,11 @@ C:\dev\trackr\Trackr\obj\Debug\Trackr.dll
 C:\dev\trackr\Trackr\obj\Debug\Trackr.pdb
 C:\dev\trackr\Trackr\bin\Telerik.OpenAccess.35.Extensions.dll
 C:\dev\trackr\Trackr\bin\Telerik.OpenAccess.35.Extensions.xml
+C:\dev\Soccer\trackr\Trackr\bin\Telerik.OpenAccess.35.Extensions.dll
+C:\dev\Soccer\trackr\Trackr\bin\Telerik.OpenAccess.DataServices.dll
+C:\dev\Soccer\trackr\Trackr\bin\Telerik.OpenAccess.dll
+C:\dev\Soccer\trackr\Trackr\bin\Telerik.OpenAccess.Runtime.dll
+C:\dev\Soccer\trackr\Trackr\bin\Telerik.OpenAccess.Web.dll
+C:\dev\Soccer\trackr\Trackr\bin\Telerik.OpenAccess.xml
+C:\dev\Soccer\trackr\Trackr\bin\Telerik.OpenAccess.35.Extensions.xml
+C:\dev\Soccer\trackr\Trackr\bin\Telerik.OpenAccess.Web.xml
