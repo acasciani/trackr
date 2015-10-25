@@ -72,8 +72,22 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Club.generated.cs">
+      <DependentUpon>ClubManagement.rlinq</DependentUpon>
+    </Compile>
+    <Compile Include="ClubManagement.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ClubManagement.rlinq</DependentUpon>
+    </Compile>
     <Compile Include="Permission.generated.cs">
       <DependentUpon>UserManagement.rlinq</DependentUpon>
+    </Compile>
+    <Compile Include="Player.generated.cs">
+      <DependentUpon>ClubManagement.rlinq</DependentUpon>
+    </Compile>
+    <Compile Include="Program.generated.cs">
+      <DependentUpon>ClubManagement.rlinq</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Role.generated.cs">
@@ -85,6 +99,15 @@
     <Compile Include="ScopeAssignment.generated.cs">
       <DependentUpon>UserManagement.rlinq</DependentUpon>
     </Compile>
+    <Compile Include="Team.generated.cs">
+      <DependentUpon>ClubManagement.rlinq</DependentUpon>
+    </Compile>
+    <Compile Include="Transaction.generated.cs">
+      <DependentUpon>ClubManagement.rlinq</DependentUpon>
+    </Compile>
+    <Compile Include="TransactionType.generated.cs">
+      <DependentUpon>ClubManagement.rlinq</DependentUpon>
+    </Compile>
     <Compile Include="UserManagement1.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -93,9 +116,19 @@
     <Compile Include="WebUser.generated.cs">
       <DependentUpon>UserManagement.rlinq</DependentUpon>
     </Compile>
+    <Compile Include="WebUserInfo.generated.cs">
+      <DependentUpon>ClubManagement.rlinq</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.Config" />
+    <OpenAccessDeploy Include="ClubManagement.rlinq">
+      <Generator>MetaModelCodeGenerator</Generator>
+      <LastGenOutput>ClubManagement.cs</LastGenOutput>
+    </OpenAccessDeploy>
+    <None Include="ClubManagement.rlinq.diagram">
+      <DependentUpon>ClubManagement.rlinq</DependentUpon>
+    </None>
     <None Include="packages.config" />
     <None Include="UserManagement.rlinq.diagram">
       <DependentUpon>UserManagement.rlinq</DependentUpon>
