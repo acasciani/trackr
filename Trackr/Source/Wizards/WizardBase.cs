@@ -8,7 +8,19 @@ namespace Trackr.Source.Wizards
 {
     public class WizardBase<K> : UserControl where K : struct
     {
-        public K? PrimaryKey { get; set; }
+        public K? PrimaryKey
+        {
+            get
+            {
+                return ViewState["PrimaryKey"] as K?;
+            }
+
+            set
+            {
+                ViewState["PrimaryKey"] = value;
+            }
+        }
+
         public bool IsNew { get { return !PrimaryKey.HasValue; } }
     }
 }

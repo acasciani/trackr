@@ -10,16 +10,16 @@ namespace Trackr.Utils
     {
         public static WebUser GetCurrentWebUser()
         {
-            if (!HttpContext.Current.User.Identity.IsAuthenticated)
+            int userID;
+
+            if (!HttpContext.Current.User.Identity.IsAuthenticated || !int.TryParse(HttpContext.Current.User.Identity.Name, out userID))
             {
                 throw new Exception("User not authenticated");
             }
 
-            string username = HttpContext.Current.User.Identity.Name;
-
             WebUser user = HttpContext.Current.Session["CurrentWebUser"] as WebUser;
 
-            if (user != null && user.Email == username)
+            if (user != null && user.UserID == userID)
             {
                 return user;
             }
@@ -27,7 +27,7 @@ namespace Trackr.Utils
             {
                 using (WebUsersController wuc = new WebUsersController())
                 {
-                    HttpContext.Current.Session["CurrentWebUser"] = wuc.GetWhere(i => i.Email == username).First();
+                    HttpContext.Current.Session["CurrentWebUser"] = wuc.GetWhere(i => i.UserID == userID).First();
                     return HttpContext.Current.Session["CurrentWebUser"] as WebUser;
                 }
             }

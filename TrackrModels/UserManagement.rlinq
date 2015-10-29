@@ -17,8 +17,8 @@
         <orm:field name="_email" property="Email" behavior="readwrite" uniqueId="717729c4-62e8-4eb9-83c7-878b74acac36" type="System.String">
           <orm:column name="Email" sql-type="nvarchar" nullable="false" length="200" scale="0" ado-type="UnicodeStringVariableLength" />
         </orm:field>
-        <orm:field name="_password" property="Password" behavior="readwrite" uniqueId="efd012c3-79fc-4e8a-aa83-bed54291e8cb" type="System.Byte[]">
-          <orm:column name="Password" sql-type="varbinary" nullable="false" length="32" scale="0" ado-type="VarBinary" />
+        <orm:field name="_password" property="Password" behavior="readwrite" uniqueId="efd012c3-79fc-4e8a-aa83-bed54291e8cb" type="System.String">
+          <orm:column name="Password" sql-type="nvarchar" nullable="false" length="128" scale="0" ado-type="UnicodeStringVariableLength" />
         </orm:field>
         <orm:field name="_scopeAssignments" property="ScopeAssignments" behavior="readwrite" uniqueId="5f013196-918a-47d6-9235-d616983dff06" type="TrackrModels.ScopeAssignment">
           <orm:collection element-class="TrackrModels.ScopeAssignment" inverse-field="_webUser" order-by="" uniqueId="f3bde9fa-95cd-4b6c-b1d2-62aed54621c2" />
@@ -135,9 +135,6 @@
         <orm:field name="_permissionName" property="PermissionName" behavior="readwrite" uniqueId="46ad7be0-a11b-47fd-adf3-02f0bcad9e72" type="System.String">
           <orm:column name="PermissionName" sql-type="nvarchar" nullable="false" length="100" scale="0" ado-type="UnicodeStringVariableLength" />
         </orm:field>
-        <orm:field name="_scopeAssignments" property="ScopeAssignments" behavior="readwrite" uniqueId="e0cb8443-c6d2-49e7-8954-59492a1a9ade" type="TrackrModels.ScopeAssignment">
-          <orm:collection element-class="TrackrModels.ScopeAssignment" inverse-field="_permission" order-by="" uniqueId="ab85e40d-41f5-479d-b0ad-5954283c62e1" />
-        </orm:field>
         <orm:field name="_roles" property="Roles" behavior="readwrite" uniqueId="6dd22a0b-ec38-4fd2-8d11-ee005afe8db3" type="TrackrModels.Role">
           <orm:join-table uniqueId="405aa91c-7478-4e4d-a176-731a2e8ec99f" association-name="PermissionsHaveRoles">
             <orm:table name="RolePermissions" join-table="true" />
@@ -153,13 +150,16 @@
             </orm:value>
           </orm:join-table>
         </orm:field>
+        <orm:field name="_scopeAssignments" property="ScopeAssignments" behavior="readwrite" uniqueId="e0cb8443-c6d2-49e7-8954-59492a1a9ade" type="TrackrModels.ScopeAssignment">
+          <orm:collection element-class="TrackrModels.ScopeAssignment" inverse-field="_permission" order-by="" uniqueId="ab85e40d-41f5-479d-b0ad-5954283c62e1" />
+        </orm:field>
       </orm:class>
     </orm:namespace>
     <orm:schema schema="">
       <orm:table name="WebUsers">
         <orm:column name="UserID" sql-type="int" nullable="false" length="0" scale="0" primary-key="true" backend-calculated="true" ado-type="Int32" />
         <orm:column name="Email" sql-type="nvarchar" nullable="false" length="200" scale="0" ado-type="UnicodeStringVariableLength" />
-        <orm:column name="Password" sql-type="varbinary" nullable="false" length="32" scale="0" ado-type="VarBinary" />
+        <orm:column name="Password" sql-type="nvarchar" nullable="false" length="128" scale="0" ado-type="UnicodeStringVariableLength" />
       </orm:table>
       <orm:table name="Scopes">
         <orm:column name="ScopeID" sql-type="int" nullable="false" length="0" scale="0" primary-key="true" backend-calculated="true" ado-type="Int32" />
@@ -212,7 +212,7 @@
   </orm:orm>
   <ModelSettings xmlns="">
     <AppConfigConnectionPropertyName>UserManagementConnection</AppConfigConnectionPropertyName>
-    <AppConfigConnectionString>Data Source=dempsey.cgya5ichg1th.us-west-2.rds.amazonaws.com,1433;Initial Catalog=UserManagement;Persist Security Info=True;User ID=alex;Password=casciani;MultipleActiveResultSets=True;Application Name=EntityFramework</AppConfigConnectionString>
+    <AppConfigConnectionString>data source=dempsey.cgya5ichg1th.us-west-2.rds.amazonaws.com,1433;initial catalog=UserManagement;persist security info=True;user id=alex;password=casciani;multipleactiveresultsets=True;application name=EntityFramework</AppConfigConnectionString>
     <InitialCatalog>UserManagement</InitialCatalog>
     <NamingSettings>
       <ClassRules>
@@ -243,7 +243,7 @@
     <DomainClass Id="af528235-fa30-4a48-83ec-c830227ba074" name="WebUser" namespace="TrackrModels" showPropertiesCompartment="true" identityMechanism="DatabaseServerCalculated" concurrencyMode="Changed" showNavigationCompartment="true" showImplementationCompartment="true" identityMechanismMember="UserID">
       <Property Id="aa9e5bdd-89b4-4716-85c3-94c6f6a6716f" name="UserID" type="Int32" label="UserID : Int32" kind="Persistent" identity="true" fieldName="_userID" />
       <Property Id="717729c4-62e8-4eb9-83c7-878b74acac36" name="Email" label="Email : String" kind="Persistent" fieldName="_email" />
-      <Property Id="efd012c3-79fc-4e8a-aa83-bed54291e8cb" name="Password" type="Byte[]" label="Password : Byte[]" kind="Persistent" fieldName="_password" />
+      <Property Id="efd012c3-79fc-4e8a-aa83-bed54291e8cb" name="Password" label="Password : String" kind="Persistent" fieldName="_password" />
       <navigationalProperties>
         <classHasNavigationalProperties Id="11bc889f-6326-480c-b769-1463f46e37c9">
           <NavigationalProperty Id="5f013196-918a-47d6-9235-d616983dff06" name="ScopeAssignments" type="IList&lt;ScopeAssignment&gt;" label="ScopeAssignments : IList&lt;ScopeAssignment&gt;" nullable="true" kind="Persistent" fieldName="_scopeAssignments" isDependent="false" isManaged="false" />

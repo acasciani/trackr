@@ -16,11 +16,10 @@ namespace Trackr.Modules.UserManagement
             get
             {
                 int userID;
-                
-                // try view state first, then query string
-                if (ViewState["WebUserID"] as int? != null)
+
+                if (UserManagement.PrimaryKey.HasValue)
                 {
-                    return ViewState["WebUserID"] as int?;
+                    return UserManagement.PrimaryKey.Value;
                 }
 
                 if (int.TryParse((Request.QueryString["wid"] ?? "").ToString(), out userID))
@@ -35,54 +34,15 @@ namespace Trackr.Modules.UserManagement
             }
         }
 
-        public string Email
-        {
-            get { return ViewState["Email"] as string ?? ""; }
-            set { ViewState["Email"] = value; }
-        }
-        
-
-
-
-
-
-
-
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (WebUserID.HasValue)
+            if (IsPostBack)
             {
-                LoadUserData(WebUserID.Value);
+                return;
             }
+
+            UserManagement.PrimaryKey = WebUserID;
         }
-
-        private void LoadUserData(int userID)
-        {
-            using (WebUsersController wuc = new WebUsersController())
-            {
-                var info = wuc.Get(userID);
-                Email = info.Email;
-            }
-        }
-
-
-        #region step 1, login information
-        protected void Step1_Activate(object sender, EventArgs e)
-        {
-
-        }
-
-        protected void Step1_Deactivate(object sender, EventArgs e)
-        {
-            
-        }
-
-        protected void txtEmail_TextChanged(object sender, EventArgs e)
-        {
-            Email = ((TextBox)sender).Text;
-        }
-        #endregion
-
 
 
     }

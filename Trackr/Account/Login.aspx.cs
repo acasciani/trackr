@@ -5,6 +5,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Owin;
 using System.Web.Security;
+using TrackrModels;
 
 namespace Trackr.Account
 {
@@ -26,7 +27,14 @@ namespace Trackr.Account
         {
             if (IsValid)
             {
-                
+                using (WebUsersController wuc = new WebUsersController())
+                {
+                    if (Membership.ValidateUser("test@test", "test"))
+                    {
+
+                        FormsAuthentication.RedirectFromLoginPage(Membership.GetUser("test@test").ProviderUserKey.ToString(), RememberMe.Checked);
+                    }
+                }
             }
         }
     }

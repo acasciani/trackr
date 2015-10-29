@@ -10,7 +10,7 @@ using Telerik.OpenAccess.FetchOptimization;
 
 namespace Trackr
 {
-    public interface IOpenAccessBaseRepository<TEntity, TContext>
+    public partial interface IOpenAccessBaseRepository<TEntity, TContext>
         where TContext : OpenAccessContext, new()
     {
         IQueryable<TEntity> GetAll();

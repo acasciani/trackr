@@ -50,8 +50,8 @@ namespace TrackrModels
 			}
 		}
 		
-		private byte[] _password;
-		public virtual byte[] Password
+		private string _password;
+		public virtual string Password
 		{
 			get
 			{

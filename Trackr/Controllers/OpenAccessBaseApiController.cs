@@ -23,11 +23,6 @@ namespace Trackr
             return allEntities;
         }
 
-        public virtual IQueryable<TEntity> GetWhere(Func<TEntity, bool> filter)
-        {
-            return repository.GetAll().Where(i => filter(i));
-        }
-
 		/// <summary>
         /// Creates a new entity based on the provided data
         /// </summary>
