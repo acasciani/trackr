@@ -6,7 +6,7 @@ using System.Web.UI.WebControls;
 
 namespace Trackr.Utils
 {
-    public enum DropDownType { Role, ScopeType }
+    public enum DropDownType { Role, ScopeType, Permission }
 
     public static class UserInputUtils
     {
@@ -27,6 +27,14 @@ namespace Trackr.Utils
                     {
                         var scopes = sc.Get().Select(i => new { Label = i.ScopeName, Value = i.ScopeID }).OrderBy(i => i.Label).ToList();
                         ddl.DataSource = scopes;
+                    }
+                    break;
+
+                case DropDownType.Permission:
+                    using (PermissionsController pc = new PermissionsController())
+                    {
+                        var permissions = pc.Get().Select(i => new { Label = i.PermissionName, Value = i.PermissionID }).OrderBy(i => i.Label).ToList();
+                        ddl.DataSource = permissions;
                     }
                     break;
 

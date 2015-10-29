@@ -18,12 +18,15 @@ namespace Trackr.Source.Wizards
         private class ScopeAssignmentResult
         {
             public string RoleName { get; set; }
+            public string PermissionName { get; set; }
             public string ScopeType { get; set; }
             public string ScopeValue { get; set; }
+            public bool IsDeny { get; set; }
             public int? ScopeAssignmentID { get; set; }
             public int ScopeID { get; set; }
             public int ResourceID { get; set; }
-            public int RoleID { get; set; }
+            public int? RoleID { get; set; }
+            public int? PermissionID { get; set; }
         }
 
         private List<ScopeAssignmentResult> ScopeAssignmentResults
@@ -53,6 +56,7 @@ namespace Trackr.Source.Wizards
             // update dropdownlists
             ddlRole.Populate(DropDownType.Role);
             ddlScopeType.Populate(DropDownType.ScopeType);
+            ddlPermission.Populate(DropDownType.Permission);
         }
 
         private void Populate_Create()
@@ -63,9 +67,17 @@ namespace Trackr.Source.Wizards
         private void Populate_Edit()
         {
             using (WebUsersController wuc = new WebUsersController())
+            using(WebUserInfosController wuic = new WebUserInfosController())
             {
                 WebUser wu = wuc.GetScopedEntity(CurrentUser.UserID, Permissions.UserManagement.EditUser, PrimaryKey.Value);
                 txtEmail.Text = wu.Email;
+
+                WebUserInfo info = wuic.GetWhere(i=>i.UserID == PrimaryKey.Value).FirstOrDefault();
+                if(info != null){
+                    txtFirstName.Text = info.FName;
+                    txtMiddleInitial.Text = info.MInitial.HasValue ? info.MInitial.ToString() : "";
+                    txtLastName.Text = info.LName;
+                }
             }
         }
 
@@ -90,13 +102,20 @@ namespace Trackr.Source.Wizards
                         FetchStrategy fetch = new FetchStrategy();
                         fetch.LoadWith<ScopeAssignment>(i => i.Role);
                         fetch.LoadWith<ScopeAssignment>(i => i.Scope);
+                        fetch.LoadWith<ScopeAssignment>(i => i.Permission);
 
                         ScopeAssignmentResults = sac.GetWhere(i => i.UserID == PrimaryKey.Value, fetch).Select(i => new ScopeAssignmentResult()
                         {
-                            RoleName = i.Role.RoleName,
+                            RoleName = i.RoleID.HasValue ? i.Role.RoleName : "",
                             ScopeAssignmentID = i.ScopeAssignmentID,
                             ScopeType = i.Scope.ScopeName,
-                            ScopeValue = sac.GetScopeValueDisplay(i.ScopeID, i.ResourceID)
+                            ScopeValue = sac.GetScopeValueDisplay(i.ScopeID, i.ResourceID),
+                             ResourceID = i.ResourceID, 
+                             RoleID = i.RoleID,
+                             ScopeID = i.ScopeID,
+                              PermissionName = i.PermissionID.HasValue ? i.Permission.PermissionName : "",
+                               PermissionID = i.PermissionID,
+                                IsDeny = i.IsDeny
                         }).ToList();
                     }
                 }
@@ -106,7 +125,7 @@ namespace Trackr.Source.Wizards
         }
        
         // The id parameter name should match the DataKeyNames value set on the control
-        public void gvRoleAssignments_DeleteItem(int? ScopeAssignmentID, int ScopeID, int ResourceID, int RoleID)
+        public void gvRoleAssignments_DeleteItem(int? ScopeAssignmentID, int? ScopeID, int? ResourceID, int? RoleID)
         {
             if (ScopeAssignmentID.HasValue)
             {
@@ -147,18 +166,27 @@ namespace Trackr.Source.Wizards
 
         protected void btnAddAssignment_Click(object sender, EventArgs e)
         {
-            int roleID, scopeID, resourceID;
+            int roleID, permissionID, scopeID, resourceID;
 
-            if (int.TryParse(ddlRole.SelectedValue, out roleID) && int.TryParse(ddlScopeType.SelectedValue, out scopeID) && int.TryParse(ddlScopeValue.SelectedValue, out resourceID))
+            if ((int.TryParse(ddlRole.SelectedValue, out roleID) || int.TryParse(ddlPermission.SelectedValue, out permissionID)) && int.TryParse(ddlScopeType.SelectedValue, out scopeID) && int.TryParse(ddlScopeValue.SelectedValue, out resourceID))
             {
+                // check that it isn't already in the list
+                if (ScopeAssignmentResults.Count(i => i.ScopeID == scopeID && i.ResourceID == resourceID && ((int.TryParse(ddlRole.SelectedValue, out roleID) && i.RoleID == roleID) || (int.TryParse(ddlPermission.SelectedValue, out permissionID) && i.PermissionID == permissionID))) > 0)
+                {
+                    return;
+                }
+
                 ScopeAssignmentResults.Add(new ScopeAssignmentResult()
                 {
                     ResourceID = resourceID,
-                    RoleID = roleID,
+                    RoleID = !int.TryParse(ddlRole.SelectedValue, out roleID) ? (int?)null : roleID,
+                    PermissionID = !int.TryParse(ddlPermission.SelectedValue, out permissionID) ? (int?)null : permissionID,
                     ScopeID = scopeID,
-                    RoleName = ddlRole.SelectedItem.Text,
+                    RoleName = ddlRole.SelectedIndex == 0 ? "" : ddlRole.SelectedItem.Text,
                     ScopeType = ddlScopeType.SelectedItem.Text,
-                    ScopeValue = ddlScopeValue.SelectedItem.Text
+                    ScopeValue = ddlScopeValue.SelectedItem.Text,
+                    IsDeny = chkDenyFlag.Checked,
+                    PermissionName = ddlPermission.SelectedIndex == 0 ? "" : ddlPermission.SelectedItem.Text
                 });
 
                 gvRoleAssignments.DataBind();
@@ -214,6 +242,28 @@ namespace Trackr.Source.Wizards
             if (user != null)
             {
                 PrimaryKey = (int)user.ProviderUserKey;
+            }
+
+            UserWizard.ActiveStepIndex = 2;
+        }
+
+        protected void Step3_RoleAssignments_Deactivate(object sender, EventArgs e)
+        {
+            using (ScopeAssignmentsController sac = new ScopeAssignmentsController())
+            {
+                foreach (ScopeAssignmentResult sar in ScopeAssignmentResults.Where(i=>!i.ScopeAssignmentID.HasValue))
+                {
+                    ScopeAssignment assignment = new ScopeAssignment()
+                    {
+                        IsDeny = false,
+                        ResourceID = sar.ResourceID,
+                        RoleID = sar.RoleID.HasValue ? sar.RoleID.Value : (int?)null,
+                        ScopeID = sar.ScopeID,
+                        UserID = PrimaryKey.Value,
+                        PermissionID = sar.PermissionID.HasValue ? sar.PermissionID.Value : (int?)null
+                    };
+                    sac.AddNew(assignment);
+                }
             }
         }
 

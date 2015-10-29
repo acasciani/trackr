@@ -188,3 +188,4 @@ C:\Development\trackr\Trackr\bin\System.Web.Providers.xml
 C:\Development\trackr\Trackr\obj\Debug\Trackr.csprojResolveAssemblyReference.cache
 C:\Development\trackr\Trackr\obj\Debug\Trackr.dll
 C:\Development\trackr\Trackr\obj\Debug\Trackr.pdb
+C:\Development\trackr\Trackr\bin\EntityFramework.dll

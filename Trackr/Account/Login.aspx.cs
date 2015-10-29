@@ -29,10 +29,10 @@ namespace Trackr.Account
             {
                 using (WebUsersController wuc = new WebUsersController())
                 {
-                    if (Membership.ValidateUser("test@test", "test"))
+                    if (Membership.ValidateUser(Email.Text, Password.Text))
                     {
 
-                        FormsAuthentication.RedirectFromLoginPage(Membership.GetUser("test@test").ProviderUserKey.ToString(), RememberMe.Checked);
+                        FormsAuthentication.RedirectFromLoginPage(Membership.GetUser(Email.Text).ProviderUserKey.ToString(), RememberMe.Checked);
                     }
                 }
             }

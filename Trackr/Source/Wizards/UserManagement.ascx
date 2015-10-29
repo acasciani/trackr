@@ -1,10 +1,39 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="UserManagement.ascx.cs" Inherits="Trackr.Source.Wizards.UserManagement" %>
 
-
-<asp:ValidationSummary runat="server" CssClass="text-danger" />
-<hr />
-
 <asp:CreateUserWizard runat="server" ID="UserWizard" LoginCreatedUser="false" OnCreatedUser="UserWizard_CreatedUser">
+    <CreateUserButtonStyle CssClass="btn btn-default" />
+
+    <StepNavigationTemplate>
+        <div class="col-sm-12 text-right">
+            <asp:Button runat="server" CommandName="MovePrevious" Text="Previous" CssClass="btn btn-default" />
+            <asp:Button runat="server" CommandName="MoveNext" Text="Save & Continue" CssClass="btn btn-default" />
+        </div>
+    </StepNavigationTemplate>
+    <StartNavigationTemplate>
+        <div class="col-sm-12 text-right">
+            <asp:Button runat="server" CommandName="MoveNext" Text="Save & Continue" CssClass="btn btn-default" />
+        </div>
+    </StartNavigationTemplate>
+    <FinishNavigationTemplate>
+        <div class="col-sm-12 text-right">
+            <asp:Button runat="server" CommandName="MovePrevious" Text="Previous" CssClass="btn btn-default" />
+            <asp:Button runat="server" CommandName="MoveComplete" Text="Save & Finish" CssClass="btn btn-default" />
+        </div>
+    </FinishNavigationTemplate>
+
+
+    <LayoutTemplate>
+        <div class="row">
+            <div class="col-sm-12">
+                <asp:PlaceHolder runat="server" ID="wizardStepPlaceholder"></asp:PlaceHolder>
+            </div>
+        </div>
+
+        <div class="row">
+            <asp:PlaceHolder runat="server" ID="navigationPlaceholder"></asp:PlaceHolder>
+        </div>
+    </LayoutTemplate>
+    
     <WizardSteps>
         <asp:CreateUserWizardStep runat="server" ID="Step1_Create">
             <ContentTemplate>
@@ -38,13 +67,14 @@
             </ContentTemplate>
         </asp:CreateUserWizardStep>
 
-        <asp:WizardStep runat="server" ID="Step1_Edit" OnDeactivate="Step1_Edit_Deactivate">
+
+        <asp:WizardStep runat="server" ID="Step1_Edit" OnDeactivate="Step1_Edit_Deactivate" StepType="Start">
             <div class="form-horizontal">
                 <div class="form-group">
                     <label for="<%=txtEmail.ClientID %>" class="col-sm-4 control-label">Email</label>
                     <div class="col-sm-8">
                         <asp:TextBox runat="server" ID="txtEmail" placeholder="e.g. jsmith@gmail.com" TextMode="Email" CssClass="form-control" />
-                        <asp:RequiredFieldValidator runat="server" ID="validatorEmailRequired" ControlToValidate="txtEmail" CssClass="text-danger" ErrorMessage="A valid email is required." />
+                        <asp:RequiredFieldValidator Display="Dynamic" runat="server" ID="validatorEmailRequired" ControlToValidate="txtEmail" CssClass="text-danger" ErrorMessage="A valid email is required." />
                     </div>
                 </div>
             </div>
@@ -52,14 +82,12 @@
 
 
         <asp:WizardStep runat="server" ID="Step2_Personal" OnDeactivate="Step2_Personal_Deactivate">
-            
-            
             <div class="form-horizontal">
                 <div class="form-group">
                     <label for="<%=txtFirstName.ClientID %>" class="col-sm-4 control-label">First name</label>
                     <div class="col-sm-8">
                         <asp:TextBox runat="server" ID="txtFirstName" MaxLength="30" CssClass="form-control" />
-                        <asp:RequiredFieldValidator runat="server" ID="validatorFirstNameRequired" ControlToValidate="txtEmail" CssClass="text-danger" ErrorMessage="A first name is required." />
+                        <asp:RequiredFieldValidator Display="Dynamic" runat="server" ID="validatorFirstNameRequired" ControlToValidate="txtFirstName" CssClass="text-danger" ErrorMessage="A first name is required." />
                     </div>
                 </div>
 
@@ -74,17 +102,17 @@
                     <label for="<%=txtLastName.ClientID %>" class="col-sm-4 control-label">Last name</label>
                     <div class="col-sm-8">
                         <asp:TextBox runat="server" ID="txtLastName" MaxLength="30" CssClass="form-control" />
-                        <asp:RequiredFieldValidator runat="server" ID="validatorLastNameRequired" ControlToValidate="txtEmail" CssClass="text-danger" ErrorMessage="A last name is required." />
+                        <asp:RequiredFieldValidator Display="Dynamic" runat="server" ID="validatorLastNameRequired" ControlToValidate="txtLastName" CssClass="text-danger" ErrorMessage="A last name is required." />
                     </div>
                 </div>
             </div>
-
         </asp:WizardStep>
 
 
-        <asp:WizardStep runat="server" ID="Step3_RoleAssignments">
-            <asp:GridView runat="server" ID="gvRoleAssignments" AutoGenerateColumns="false" SelectMethod="gvRoleAssignments_GetData" DeleteMethod="gvRoleAssignments_DeleteItem" DataKeyNames="ScopeAssignmentID,ScopeID,ResourceID,RoleID">
+        <asp:WizardStep runat="server" ID="Step3_RoleAssignments" OnDeactivate="Step3_RoleAssignments_Deactivate">
+            <asp:GridView runat="server" ID="gvRoleAssignments" AutoGenerateColumns="false" SelectMethod="gvRoleAssignments_GetData" DeleteMethod="gvRoleAssignments_DeleteItem" DataKeyNames="ScopeAssignmentID,ScopeID,ResourceID,RoleID" CssClass="table table-striped">
                 <Columns>
+                    <asp:BoundField DataField="PermissionName" HeaderText="Permission" />
                     <asp:BoundField DataField="RoleName" HeaderText="Role" />
                     <asp:BoundField DataField="ScopeType" HeaderText="Scope Type" />
                     <asp:BoundField DataField="ScopeValue" HeaderText="Scoped To" />
@@ -108,6 +136,22 @@
                             <asp:DropDownList runat="server" ID="ddlRole" CssClass="form-control" AppendDataBoundItems="true">
                                 <asp:ListItem Text="-- Select a Role --"></asp:ListItem>
                             </asp:DropDownList>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="<%=ddlPermission.ClientID %>" class="col-sm-2 control-label">Permission</label>
+                        <div class="col-sm-10">
+                            <asp:DropDownList runat="server" ID="ddlPermission" CssClass="form-control" AppendDataBoundItems="true">
+                                <asp:ListItem Text="-- Select a Permission --"></asp:ListItem>
+                            </asp:DropDownList>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="<%=chkDenyFlag.ClientID %>" class="col-sm-2 control-label">Deny</label>
+                        <div class="col-sm-10">
+                            <asp:CheckBox runat="server" ID="chkDenyFlag" />
                         </div>
                     </div>
 

@@ -157,6 +157,24 @@ namespace Trackr.Source.Wizards {
         protected global::System.Web.UI.WebControls.DropDownList ddlRole;
         
         /// <summary>
+        /// ddlPermission control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlPermission;
+        
+        /// <summary>
+        /// chkDenyFlag control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox chkDenyFlag;
+        
+        /// <summary>
         /// ddlScopeType control.
         /// </summary>
         /// <remarks>
