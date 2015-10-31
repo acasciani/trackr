@@ -13,6 +13,15 @@ namespace Trackr.Source.Wizards {
     public partial class UserManagement {
         
         /// <summary>
+        /// AlertBox control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Trackr.UI.AlertBox AlertBox;
+        
+        /// <summary>
         /// UserWizard control.
         /// </summary>
         /// <remarks>
@@ -20,15 +29,6 @@ namespace Trackr.Source.Wizards {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.CreateUserWizard UserWizard;
-        
-        /// <summary>
-        /// Step1_Create control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.CreateUserWizardStep Step1_Create;
         
         /// <summary>
         /// Step1_Edit control.
@@ -157,6 +157,15 @@ namespace Trackr.Source.Wizards {
         protected global::System.Web.UI.WebControls.DropDownList ddlRole;
         
         /// <summary>
+        /// validatorRoleRequired control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CustomValidator validatorRoleRequired;
+        
+        /// <summary>
         /// ddlPermission control.
         /// </summary>
         /// <remarks>
@@ -164,6 +173,24 @@ namespace Trackr.Source.Wizards {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlPermission;
+        
+        /// <summary>
+        /// validatorPermissionRequired control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CustomValidator validatorPermissionRequired;
+        
+        /// <summary>
+        /// validatorPermissionNotAlsoEntered control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CustomValidator validatorPermissionNotAlsoEntered;
         
         /// <summary>
         /// chkDenyFlag control.
@@ -184,6 +211,15 @@ namespace Trackr.Source.Wizards {
         protected global::System.Web.UI.WebControls.DropDownList ddlScopeType;
         
         /// <summary>
+        /// validatorSelectAScope control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CustomValidator validatorSelectAScope;
+        
+        /// <summary>
         /// ddlScopeValue control.
         /// </summary>
         /// <remarks>
@@ -191,6 +227,15 @@ namespace Trackr.Source.Wizards {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlScopeValue;
+        
+        /// <summary>
+        /// validatorSelectAResource control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CustomValidator validatorSelectAResource;
         
         /// <summary>
         /// btnAddAssignment control.

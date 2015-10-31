@@ -426,7 +426,18 @@ namespace TrackrProviders.Security
 
         public override MembershipUserCollection FindUsersByName(string usernameToMatch, int pageIndex, int pageSize, out int totalRecords)
         {
-            throw new NotImplementedException("Find users by name not currently implemented");
+            using (WebUsersController wuc = new WebUsersController())
+            {
+                var webUsers = wuc.GetWhere(i => i.Email == usernameToMatch).Select(i => GetMembershipUserFromPersistedEntity(i));
+
+                MembershipUserCollection collection = new MembershipUserCollection();
+                foreach (MembershipUser user in webUsers)
+                {
+                    collection.Add(user);
+                }
+                totalRecords = collection.Count;
+                return collection;
+            }
         }
 
         public override MembershipUserCollection FindUsersByEmail(string emailToMatch, int pageIndex, int pageSize, out int totalRecords)

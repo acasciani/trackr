@@ -92,5 +92,18 @@ namespace Trackr
             List<int> scopedIDs = GetScopedIDs(scopeAssignment);
             return Get().Where(i => scopedIDs.Contains(i.UserID));
         }
+
+        /// <summary>
+        /// If the user has any instance of deny for this permissin, then this returns false
+        /// </summary>
+        public bool IsAllowed(int userID, string permission)
+        {
+            ScopeController sc = new ScopeController();
+            var assignments = sc.GetScopeAssignments(userID, permission);
+            var denyCount = assignments.Count(i => i.IsDeny);
+            var allowCount = assignments.Count(i => !i.IsDeny);
+
+            return denyCount == 0 && allowCount > 0;
+        }
     }
 }

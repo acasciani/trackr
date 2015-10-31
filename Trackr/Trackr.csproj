@@ -225,6 +225,7 @@
     <Content Include="Default.aspx" />
     <Content Include="favicon.ico" />
     <Content Include="Site.Master" />
+    <Content Include="Source\Controls\AlertBox.ascx" />
     <Content Include="Source\Wizards\PlayerManagement.ascx" />
     <Content Include="Source\Wizards\UserManagement.ascx" />
     <Content Include="ViewSwitcher.ascx" />
@@ -309,6 +310,14 @@
     <Compile Include="Site.Mobile.Master.designer.cs">
       <DependentUpon>Site.Mobile.Master</DependentUpon>
     </Compile>
+    <Compile Include="Source\Controls\AlertBox.ascx.cs">
+      <DependentUpon>AlertBox.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Source\Controls\AlertBox.ascx.designer.cs">
+      <DependentUpon>AlertBox.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Source\Exceptions\UserUnauthorizedException.cs" />
     <Compile Include="Source\Page.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
@@ -318,6 +327,8 @@
     <Compile Include="Source\UserControl.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="Source\Exceptions\UserNotScopedException.cs" />
+    <Compile Include="Source\Utils\ConverterUtils.cs" />
     <Compile Include="Source\Utils\PageExtensions.cs" />
     <Compile Include="Source\Utils\UserInputUtils.cs" />
     <Compile Include="Source\Wizards\PlayerManagement.ascx.cs">

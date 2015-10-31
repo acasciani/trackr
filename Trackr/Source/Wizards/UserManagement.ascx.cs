@@ -35,8 +35,50 @@ namespace Trackr.Source.Wizards
             set { ViewState["ScopeAssignments"] = value; }
         }
 
+        protected void Page_Init(object sender, EventArgs e)
+        {
+            UserWizard.DisplaySideBar = UserWizard.ActiveStepIndex > 0;
+
+            if (IsPostBack)
+            {
+                return;
+            }
+
+            using (WebUsersController wuc = new WebUsersController())
+            {
+                if (IsNew)
+                {
+                    if (wuc.IsAllowed(CurrentUser.UserID, Permissions.UserManagement.CreateUser))
+                    {
+                        // remove the edit stuff
+                        UserWizard.ActiveStepIndex = 0;
+                    }
+                    else
+                    {
+                        throw new UserUnauthorizedException("You do not have permission to create a new user.");
+                    }
+                }
+                else
+                {
+                    if (wuc.GetScopedEntity(CurrentUser.UserID, Permissions.UserManagement.EditUser, PrimaryKey.Value) != null)
+                    {
+                        // remove create stuff
+                        UserWizard.ActiveStepIndex = 1;
+                    }
+                    else
+                    {
+                        throw new UserNotScopedException("You are not allowed to edit the selected user.");
+                    }
+                }
+            }
+
+            UserWizard.DisplaySideBar = UserWizard.ActiveStepIndex > 0;
+        }
+
         protected void Page_Load(object sender, EventArgs e)
         {
+            AlertBox.HideStatus();
+
             if (IsPostBack)
             {
                 return;
@@ -44,12 +86,10 @@ namespace Trackr.Source.Wizards
 
             if (IsNew)
             {
-                UserWizard.ActiveStepIndex = 0;
                 Populate_Create();
             }
             else
             {
-                UserWizard.ActiveStepIndex = 1;
                 Populate_Edit();
             }
 
@@ -59,9 +99,10 @@ namespace Trackr.Source.Wizards
             ddlPermission.Populate(DropDownType.Permission);
         }
 
+        
         private void Populate_Create()
         {
-            UserWizard.ActiveStepIndex = 0;
+
         }
 
         private void Populate_Edit()
@@ -244,7 +285,11 @@ namespace Trackr.Source.Wizards
                 PrimaryKey = (int)user.ProviderUserKey;
             }
 
+            Populate_Edit();
             UserWizard.ActiveStepIndex = 2;
+            UserWizard.DisplaySideBar = true;
+
+            AlertBox.SetStatus("Successfully created user. Enter user's personal information below.");
         }
 
         protected void Step3_RoleAssignments_Deactivate(object sender, EventArgs e)
@@ -267,6 +312,53 @@ namespace Trackr.Source.Wizards
             }
         }
 
+        protected void UserWizard_CreateUserError(object sender, CreateUserErrorEventArgs e)
+        {
+            string plainEnglishMsg = "An error occurred while creating the user.";
 
+            switch (e.CreateUserError)
+            {
+                case MembershipCreateStatus.DuplicateEmail: plainEnglishMsg = "This email address is already in use and cannot be used again."; break;
+                case MembershipCreateStatus.DuplicateProviderUserKey: plainEnglishMsg = "The provider key specified is already in use and cannot be used again."; break;
+                case MembershipCreateStatus.DuplicateUserName: plainEnglishMsg = "This email address is already in use and cannot be used again."; break;
+                case MembershipCreateStatus.InvalidEmail: plainEnglishMsg = "This is an invalid email address."; break;
+                default: break;
+            }
+
+            AlertBox.SetStatus(plainEnglishMsg, UI.AlertBoxType.Error);
+        }
+
+        protected void validatorEmailExists_ServerValidate(object source, ServerValidateEventArgs args)
+        {
+            args.IsValid = Membership.FindUsersByName(args.Value).Count == 0;
+        }
+
+        protected void validatorPermissionNotAlsoEntered_ServerValidate(object source, ServerValidateEventArgs args)
+        {
+            if (ddlRole.SelectedIndex > 0 && ddlPermission.SelectedIndex > 0)
+            {
+                args.IsValid= false;
+            }
+            else
+            {
+                args.IsValid=true;
+            }
+        }
+
+        protected void validatorSelectItem_ServerValidate(object source, ServerValidateEventArgs args)
+        {
+            int tryParse;
+            args.IsValid = int.TryParse(args.Value, out tryParse);
+        }
+
+        protected void validatorRolePermissionRequired_ServerValidate(object source, ServerValidateEventArgs args)
+        {
+            args.IsValid = ddlPermission.SelectedIndex > 0 || ddlRole.SelectedIndex > 0;
+        }
+
+        protected void lnkEditAgain_Click(object sender, EventArgs e)
+        {
+            UserWizard.ActiveStepIndex = 1;
+        }
     }
 }

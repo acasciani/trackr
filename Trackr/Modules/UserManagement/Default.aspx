@@ -4,6 +4,13 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
 
-    <ui:UserManagement runat="server" ID="UserManagement" />
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4>User Management - <%= UserManagement.IsNew ? "Create User" : "Edit User" %></h4>
+        </div>
+        <div class="panel-body">
+            <ui:UserManagement runat="server" ID="UserManagement" />
+        </div>
+    </div>
 
 </asp:Content>

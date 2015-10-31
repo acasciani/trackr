@@ -64,8 +64,6 @@ C:\dev\trackr\Trackr\bin\Trackr.pdb
 C:\dev\trackr\Trackr\bin\Antlr3.Runtime.dll
 C:\dev\trackr\Trackr\bin\AspNet.ScriptManager.bootstrap.dll
 C:\dev\trackr\Trackr\bin\AspNet.ScriptManager.jQuery.dll
-C:\dev\trackr\Trackr\bin\EntityFramework.dll
-C:\dev\trackr\Trackr\bin\EntityFramework.SqlServer.dll
 C:\dev\trackr\Trackr\bin\Microsoft.AspNet.FriendlyUrls.dll
 C:\dev\trackr\Trackr\bin\Microsoft.AspNet.Identity.Core.dll
 C:\dev\trackr\Trackr\bin\Microsoft.AspNet.Identity.EntityFramework.dll
@@ -75,11 +73,8 @@ C:\dev\trackr\Trackr\bin\Microsoft.Owin.dll
 C:\dev\trackr\Trackr\bin\Microsoft.Owin.Host.SystemWeb.dll
 C:\dev\trackr\Trackr\bin\Microsoft.Owin.Security.Cookies.dll
 C:\dev\trackr\Trackr\bin\Microsoft.Owin.Security.dll
-C:\dev\trackr\Trackr\bin\Microsoft.Owin.Security.Facebook.dll
 C:\dev\trackr\Trackr\bin\Microsoft.Owin.Security.Google.dll
-C:\dev\trackr\Trackr\bin\Microsoft.Owin.Security.MicrosoftAccount.dll
 C:\dev\trackr\Trackr\bin\Microsoft.Owin.Security.OAuth.dll
-C:\dev\trackr\Trackr\bin\Microsoft.Owin.Security.Twitter.dll
 C:\dev\trackr\Trackr\bin\Microsoft.ScriptManager.MSAjax.dll
 C:\dev\trackr\Trackr\bin\Microsoft.ScriptManager.WebForms.dll
 C:\dev\trackr\Trackr\bin\Microsoft.Web.Infrastructure.dll
@@ -100,8 +95,6 @@ C:\dev\trackr\Trackr\bin\Microsoft.AspNet.FriendlyUrls.xml
 C:\dev\trackr\Trackr\bin\System.Net.Http.Formatting.xml
 C:\dev\trackr\Trackr\bin\System.Web.Http.xml
 C:\dev\trackr\Trackr\bin\System.Web.Http.WebHost.xml
-C:\dev\trackr\Trackr\bin\EntityFramework.xml
-C:\dev\trackr\Trackr\bin\EntityFramework.SqlServer.xml
 C:\dev\trackr\Trackr\bin\Microsoft.AspNet.Identity.Core.xml
 C:\dev\trackr\Trackr\bin\Microsoft.AspNet.Identity.Owin.xml
 C:\dev\trackr\Trackr\bin\Microsoft.AspNet.Identity.EntityFramework.xml
@@ -109,11 +102,8 @@ C:\dev\trackr\Trackr\bin\System.Web.Providers.xml
 C:\dev\trackr\Trackr\bin\Microsoft.Owin.xml
 C:\dev\trackr\Trackr\bin\Microsoft.Owin.Host.SystemWeb.xml
 C:\dev\trackr\Trackr\bin\Microsoft.Owin.Security.xml
-C:\dev\trackr\Trackr\bin\Microsoft.Owin.Security.Facebook.xml
 C:\dev\trackr\Trackr\bin\Microsoft.Owin.Security.Cookies.xml
 C:\dev\trackr\Trackr\bin\Microsoft.Owin.Security.Google.xml
-C:\dev\trackr\Trackr\bin\Microsoft.Owin.Security.Twitter.xml
-C:\dev\trackr\Trackr\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
 C:\dev\trackr\Trackr\bin\Microsoft.Owin.Security.OAuth.xml
 C:\dev\trackr\Trackr\obj\Debug\Trackr.csprojResolveAssemblyReference.cache
 C:\dev\trackr\Trackr\obj\Debug\Trackr.dll
@@ -189,3 +179,12 @@ C:\Development\trackr\Trackr\obj\Debug\Trackr.csprojResolveAssemblyReference.cac
 C:\Development\trackr\Trackr\obj\Debug\Trackr.dll
 C:\Development\trackr\Trackr\obj\Debug\Trackr.pdb
 C:\Development\trackr\Trackr\bin\EntityFramework.dll
+C:\DEV\trackr\Trackr\bin\System.Web.Http.Owin.dll
+C:\DEV\trackr\Trackr\bin\Telerik.OpenAccess.DataServices.dll
+C:\DEV\trackr\Trackr\bin\Telerik.OpenAccess.dll
+C:\DEV\trackr\Trackr\bin\Telerik.OpenAccess.Runtime.dll
+C:\DEV\trackr\Trackr\bin\Telerik.OpenAccess.Web.dll
+C:\DEV\trackr\Trackr\bin\System.Web.Http.Owin.xml
+C:\DEV\trackr\Trackr\bin\Telerik.OpenAccess.xml
+C:\DEV\trackr\Trackr\bin\Telerik.OpenAccess.Web.xml
+C:\DEV\trackr\Trackr\bin\EntityFramework.dll

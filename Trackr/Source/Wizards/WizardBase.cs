@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
+using Trackr.Utils;
 
 namespace Trackr.Source.Wizards
 {
@@ -12,6 +13,16 @@ namespace Trackr.Source.Wizards
         {
             get
             {
+                if (ViewState["PrimaryKey"] as K? == null && Request.QueryString["id"] != null)
+                {
+                    K? converted = Request.QueryString["id"].TryParse<K>();
+                    if (converted.HasValue)
+                    {
+                        ViewState["PrimaryKey"] = converted;
+                        return converted;
+                    }
+                }
+
                 return ViewState["PrimaryKey"] as K?;
             }
 

@@ -8,3 +8,11 @@ body {
 .text-right{
     text-align:right;
 }
+
+.navbar.bottom .navbar-text {
+    margin-right: 15px;
+    margin-left: 15px;
+}
+
+.navbar.bottom.navbar-fixed-bottom {
+}
