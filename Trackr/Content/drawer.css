@@ -22,7 +22,7 @@ hr {
   border-color:#dedede;
 }
 
-.wrapper, .row {
+.wrapper , .row {
    height: 100%;
    margin-left:0;
    margin-right:0;
@@ -51,6 +51,7 @@ hr {
 
 .full{
 	padding-top:70px;
+    padding-bottom: 55px;
 }
 
 .box {

@@ -31,8 +31,11 @@ namespace Trackr.Account
                 {
                     if (Membership.ValidateUser(Email.Text, Password.Text))
                     {
-
                         FormsAuthentication.RedirectFromLoginPage(Membership.GetUser(Email.Text).ProviderUserKey.ToString(), RememberMe.Checked);
+                    }
+                    else
+                    {
+                        AlertBox.SetStatus("The email address and password entered do not match.", UI.AlertBoxType.Error);
                     }
                 }
             }

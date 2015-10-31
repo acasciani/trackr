@@ -521,7 +521,8 @@ namespace TrackrProviders.Security
 
             if (user == null)
             {
-                throw new ProviderException("The requested user could not be found.");
+                return null;
+                //throw new ProviderException("The requested user could not be found.");
             }
 
             return user;
