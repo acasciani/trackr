@@ -186,6 +186,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Modules\UserManagement\Default.aspx" />
+    <Content Include="Modules\UserManagement\Manage.aspx" />
     <Content Include="packages.config" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
@@ -263,6 +264,13 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\OpenAccessBaseApiController.Partial.cs" />
+    <Compile Include="Modules\UserManagement\Manage.aspx.cs">
+      <DependentUpon>Manage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Modules\UserManagement\Manage.aspx.designer.cs">
+      <DependentUpon>Manage.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Repositories\ClubManagementRepositories.cs" />
     <Compile Include="Controllers\ClubsController.cs" />
     <Compile Include="Controllers\Partials\ScopeAssignmentsController.Partial.cs" />

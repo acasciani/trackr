@@ -16,5 +16,28 @@ namespace Trackr
                 return PageExtensions.GetCurrentWebUser();
             }
         }
+
+        public void CheckAllowed(string permission)
+        {
+            using (WebUsersController wuc = new WebUsersController())
+            {
+                if (!wuc.IsAllowed(CurrentUser.UserID, permission))
+                {
+                    // optionally we can just make them go back to original page?
+                    Response.Redirect("~/Default.aspx", true);
+                }
+            }
+        }
+
+        public void CheckAllowed(string permission, int resourceID)
+        {
+            using (WebUsersController wuc = new WebUsersController())
+            {
+                if (!wuc.IsUserScoped(CurrentUser.UserID, permission, resourceID))
+                {
+                    Response.Redirect("~/Default.aspx", true);
+                }
+            }
+        }
     }
 }
