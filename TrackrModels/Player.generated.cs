@@ -37,45 +37,6 @@ namespace TrackrModels
 			}
 		}
 		
-		private int? _teamID;
-		public virtual int? TeamID
-		{
-			get
-			{
-				return this._teamID;
-			}
-			set
-			{
-				this._teamID = value;
-			}
-		}
-		
-		private string _playerPassID;
-		public virtual string PlayerPassID
-		{
-			get
-			{
-				return this._playerPassID;
-			}
-			set
-			{
-				this._playerPassID = value;
-			}
-		}
-		
-		private byte[] _playerPhoto;
-		public virtual byte[] PlayerPhoto
-		{
-			get
-			{
-				return this._playerPhoto;
-			}
-			set
-			{
-				this._playerPhoto = value;
-			}
-		}
-		
 		private DateTime _dateOfBirth;
 		public virtual DateTime DateOfBirth
 		{
@@ -89,16 +50,42 @@ namespace TrackrModels
 			}
 		}
 		
-		private Team _team;
-		public virtual Team Team
+		private System.Nullable<System.Char> _mInitial;
+		public virtual System.Nullable<System.Char> MInitial
 		{
 			get
 			{
-				return this._team;
+				return this._mInitial;
 			}
 			set
 			{
-				this._team = value;
+				this._mInitial = value;
+			}
+		}
+		
+		private string _lName;
+		public virtual string LName
+		{
+			get
+			{
+				return this._lName;
+			}
+			set
+			{
+				this._lName = value;
+			}
+		}
+		
+		private string _fName;
+		public virtual string FName
+		{
+			get
+			{
+				return this._fName;
+			}
+			set
+			{
+				this._fName = value;
 			}
 		}
 		
@@ -108,6 +95,15 @@ namespace TrackrModels
 			get
 			{
 				return this._transactions;
+			}
+		}
+		
+		private IList<TeamPlayer> _teamPlayers = new List<TeamPlayer>();
+		public virtual IList<TeamPlayer> TeamPlayers
+		{
+			get
+			{
+				return this._teamPlayers;
 			}
 		}
 		

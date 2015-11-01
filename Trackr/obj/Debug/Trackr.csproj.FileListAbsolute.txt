@@ -187,4 +187,3 @@ C:\DEV\trackr\Trackr\bin\Telerik.OpenAccess.Web.dll
 C:\DEV\trackr\Trackr\bin\System.Web.Http.Owin.xml
 C:\DEV\trackr\Trackr\bin\Telerik.OpenAccess.xml
 C:\DEV\trackr\Trackr\bin\Telerik.OpenAccess.Web.xml
-C:\DEV\trackr\Trackr\bin\EntityFramework.dll

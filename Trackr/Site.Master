@@ -63,11 +63,13 @@
 
                         <ul class="nav hidden-xs" id="lg-menu">
                             <li class="active"><a href="/Modules/UserManagement/"><i class="glyphicon glyphicon-user"></i> User Management</a></li>
+                            <li class="active"><a href="/Modules/PlayerManagement/"><i class="glyphicon glyphicon-globe"></i> Player Management</a></li>
                         </ul>
 
                         <!-- tiny only nav-->
                         <ul class="nav visible-xs" id="xs-menu">
                             <li><a href="/Modules/UserManagement/" class="text-center"><i class="glyphicon glyphicon-user"></i></a></li>
+                            <li><a href="/Modules/PlayerManagement/" class="text-center"><i class="glyphicon glyphicon-globe"></i></a></li>
                         </ul>
 
                     </div>

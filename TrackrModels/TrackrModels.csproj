@@ -102,6 +102,9 @@
     <Compile Include="Team.generated.cs">
       <DependentUpon>ClubManagement.rlinq</DependentUpon>
     </Compile>
+    <Compile Include="TeamPlayer.generated.cs">
+      <DependentUpon>ClubManagement.rlinq</DependentUpon>
+    </Compile>
     <Compile Include="Transaction.generated.cs">
       <DependentUpon>ClubManagement.rlinq</DependentUpon>
     </Compile>

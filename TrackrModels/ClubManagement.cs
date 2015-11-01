@@ -106,6 +106,14 @@ namespace TrackrModels
 			}
 		}
 		
+		public IQueryable<TeamPlayer> TeamPlayers 
+		{
+			get
+			{
+				return this.GetAll<TeamPlayer>();
+			}
+		}
+		
 		public static BackendConfiguration GetBackendConfiguration()
 		{
 			BackendConfiguration backend = new BackendConfiguration();
@@ -152,6 +160,10 @@ namespace TrackrModels
 			get;
 		}
 		IQueryable<Club> Clubs
+		{
+			get;
+		}
+		IQueryable<TeamPlayer> TeamPlayers
 		{
 			get;
 		}

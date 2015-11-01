@@ -14,5 +14,11 @@ namespace Trackr
             public const string ViewUsers = "UserManagement.ViewUsers";
         }
 
+        public class PlayerManagement
+        {
+            public const string CreatePlayer = "PlayerManagement.CreatePlayer";
+            public const string EditPlayer = "PlayerManagement.EditPlayer";
+            public const string ViewPlayers = "PlayerManagement.ViewPlayers";
+        }
     }
 }

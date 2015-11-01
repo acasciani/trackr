@@ -185,6 +185,8 @@
     <Content Include="Content\Site.css" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
+    <Content Include="Modules\PlayerManagement\Default.aspx" />
+    <Content Include="Modules\PlayerManagement\Manage.aspx" />
     <Content Include="Modules\UserManagement\Default.aspx" />
     <Content Include="Modules\UserManagement\Manage.aspx" />
     <Content Include="packages.config" />
@@ -192,6 +194,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Account\Web.config" />
+    <Content Include="Modules\PlayerManagement\PlayerManagement.master" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -264,6 +267,28 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\OpenAccessBaseApiController.Partial.cs" />
+    <Compile Include="Controllers\Scoping\PlayersController.Partial.cs" />
+    <Compile Include="Modules\PlayerManagement\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Modules\PlayerManagement\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\PlayerManagement\Manage.aspx.cs">
+      <DependentUpon>Manage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Modules\PlayerManagement\Manage.aspx.designer.cs">
+      <DependentUpon>Manage.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\PlayerManagement\PlayerManagement.master.cs">
+      <DependentUpon>PlayerManagement.master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Modules\PlayerManagement\PlayerManagement.master.designer.cs">
+      <DependentUpon>PlayerManagement.master</DependentUpon>
+    </Compile>
     <Compile Include="Modules\UserManagement\Manage.aspx.cs">
       <DependentUpon>Manage.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -369,6 +394,7 @@
     <Compile Include="Controllers\TeamsController.cs" />
     <Compile Include="Controllers\TransactionsController.cs" />
     <Compile Include="Controllers\TransactionTypesController.cs" />
+    <Compile Include="Controllers\TeamPlayersController.cs" />
     <Compile Include="ViewSwitcher.ascx.cs">
       <DependentUpon>ViewSwitcher.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
