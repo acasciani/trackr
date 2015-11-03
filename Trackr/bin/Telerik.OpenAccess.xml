@@ -3842,7 +3842,7 @@
         </member>
         <member name="M:Telerik.OpenAccess.Diagnostics.HistoryFileInfo.ToString">
             <summary>
-            Returns the infoormation in a formatted way
+            Returns the information in a formatted way
             </summary>
             <returns>Information in a formatted way</returns>
         </member>
@@ -5840,7 +5840,7 @@
         </member>
         <member name="T:Telerik.OpenAccess.Metadata.MetaItemFullName">
             <summary>
-            Calculate the full name of meta tables, constrains or stored procedures
+            Calculate the full name of meta tables, constraints or stored procedures
             </summary>
         </member>
         <member name="M:Telerik.OpenAccess.Metadata.MetaItemFullName.GetFullNameForRelationalItem(System.String,System.String,System.String)">
@@ -8806,6 +8806,14 @@
             </summary>
             <remarks>Under medium trust, some operations cannot be performed and the Telerik Data Access runtime must be
             made aware of this. This affects things where privileged operations are needed.</remarks>
+            <value>Default: false</value>
+        </member>
+        <member name="P:Telerik.OpenAccess.BackendConfiguration.RuntimeConfiguration.WriteArtificialTypesToDisk">
+            <summary>
+            Controls if assemblies containing artificial types are written to disk.
+            </summary>
+            <remarks>Artificial types can be generated at runtime. To aid debugging, the assemblies in which those types 
+            are contained can be written to disk. Artificial types assemblies are never loaded from disk, however.</remarks>
             <value>Default: false</value>
         </member>
         <member name="P:Telerik.OpenAccess.BackendConfiguration.RuntimeConfiguration.SupportConcurrentThreadsInScope">

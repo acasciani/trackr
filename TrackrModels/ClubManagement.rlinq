@@ -279,6 +279,14 @@
         <orm:field name="_teamPlayers" property="TeamPlayers" behavior="readwrite" uniqueId="78b6c29b-3d7a-456b-a1e4-89c13a986c58" type="TrackrModels.TeamPlayer">
           <orm:collection element-class="TrackrModels.TeamPlayer" inverse-field="_playerPass" order-by="" uniqueId="d817665e-6fc0-421b-9d2e-72ffa1db1937" />
         </orm:field>
+        <orm:index name="UniquePlayerPerYear" unique="true">
+          <orm:columnMapping>
+            <orm:column name="PlayerID" sql-type="int" nullable="false" length="0" scale="0" ado-type="Int32" />
+          </orm:columnMapping>
+          <orm:columnMapping>
+            <orm:column name="Expires" sql-type="date" nullable="false" length="0" scale="0" ado-type="Date" />
+          </orm:columnMapping>
+        </orm:index>
       </orm:class>
       <orm:class name="TeamPlayer" uniqueId="f459290d-2db6-4ca4-9f7d-d582a9160ad8">
         <orm:table name="TeamPlayers" />
@@ -313,6 +321,14 @@
             <orm:constraint name="FK_TeamPlayers_PlayerPasses" delete-action="dbdefaultrule" destination-table="PlayerPasses" />
           </orm:reference>
         </orm:field>
+        <orm:index name="PlayerOnSameTeamOnlyOnce" unique="true">
+          <orm:columnMapping>
+            <orm:column name="PlayerPassID" sql-type="int" nullable="false" length="0" scale="0" ado-type="Int32" />
+          </orm:columnMapping>
+          <orm:columnMapping>
+            <orm:column name="TeamID" sql-type="int" nullable="false" length="0" scale="0" ado-type="Int32" />
+          </orm:columnMapping>
+        </orm:index>
       </orm:class>
     </orm:namespace>
     <orm:schema schema="">
@@ -393,6 +409,14 @@
         <orm:column name="PassNumber" sql-type="nvarchar" nullable="true" length="50" scale="0" ado-type="UnicodeStringVariableLength" />
         <orm:column name="Expires" sql-type="date" nullable="false" length="0" scale="0" ado-type="Date" />
         <orm:column name="PlayerID" sql-type="int" nullable="false" length="0" scale="0" ado-type="Int32" />
+        <orm:index name="UniquePlayerPerYear" unique="true">
+          <orm:columnMapping>
+            <orm:column name="PlayerID" sql-type="int" nullable="false" length="0" scale="0" ado-type="Int32" />
+          </orm:columnMapping>
+          <orm:columnMapping>
+            <orm:column name="Expires" sql-type="date" nullable="false" length="0" scale="0" ado-type="Date" />
+          </orm:columnMapping>
+        </orm:index>
         <orm:constraint name="FK_PlayerPasses_Players" delete-action="dbdefaultrule" destination-table="Players">
           <orm:column name="PlayerID" sql-type="int" nullable="false" length="0" scale="0" ado-type="Int32" />
         </orm:constraint>
@@ -402,6 +426,14 @@
         <orm:column name="TeamID" sql-type="int" nullable="false" length="0" scale="0" ado-type="Int32" />
         <orm:column name="PlayerPassID" sql-type="int" nullable="false" length="0" scale="0" ado-type="Int32" />
         <orm:column name="IsSecondary" sql-type="bit" nullable="false" length="0" scale="0" has-default-value="true" ado-type="Bit" />
+        <orm:index name="PlayerOnSameTeamOnlyOnce" unique="true">
+          <orm:columnMapping>
+            <orm:column name="PlayerPassID" sql-type="int" nullable="false" length="0" scale="0" ado-type="Int32" />
+          </orm:columnMapping>
+          <orm:columnMapping>
+            <orm:column name="TeamID" sql-type="int" nullable="false" length="0" scale="0" ado-type="Int32" />
+          </orm:columnMapping>
+        </orm:index>
         <orm:constraint name="FK_TeamPlayers_Teams" delete-action="dbdefaultrule" destination-table="Teams">
           <orm:column name="TeamID" sql-type="int" nullable="false" length="0" scale="0" ado-type="Int32" />
         </orm:constraint>
@@ -411,6 +443,7 @@
       </orm:table>
     </orm:schema>
     <orm:relational-naming-settings>
+      <orm:remove-leading-underscore>False</orm:remove-leading-underscore>
       <orm:source-strategy>Property</orm:source-strategy>
       <orm:remove-camel-case>False</orm:remove-camel-case>
     </orm:relational-naming-settings>
@@ -434,13 +467,19 @@
       <NavigationPropertyRules />
     </NamingSettings>
     <CodeGenerationSettings>
+      <ImplementISerializable>true</ImplementISerializable>
       <MappingDefinitionType>Xml</MappingDefinitionType>
     </CodeGenerationSettings>
-    <SchemaUpdateSettings />
+    <SchemaUpdateSettings>
+      <DeploymentProject>TrackrModels</DeploymentProject>
+    </SchemaUpdateSettings>
     <BackendConfigurationSettings>
       <BackendConfiguration>
         <Backend>MsSql</Backend>
         <ProviderName>System.Data.SqlClient</ProviderName>
+        <Logging>
+          <MetricStoreSnapshotInterval>0</MetricStoreSnapshotInterval>
+        </Logging>
       </BackendConfiguration>
     </BackendConfigurationSettings>
   </ModelSettings>

@@ -22,7 +22,8 @@ using TrackrModels;
 
 namespace TrackrModels	
 {
-	public partial class TeamPlayer
+	[System.Serializable()]
+	public partial class TeamPlayer : System.Runtime.Serialization.ISerializable
 	{
 		private int _teamPlayerID;
 		public virtual int TeamPlayerID
@@ -102,6 +103,33 @@ namespace TrackrModels
 			}
 		}
 		
+		#region ISerializable Implementation
+		
+		public TeamPlayer()
+		{
+		}
+		
+		protected TeamPlayer(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context)
+		{
+			this.TeamPlayerID = info.GetInt32("TeamPlayerID");
+			this.TeamID = info.GetInt32("TeamID");
+			this.PlayerPassID = info.GetInt32("PlayerPassID");
+			this.IsSecondary = info.GetBoolean("IsSecondary");
+			CustomizeDeserializationProcess(info, context);
+		}
+		
+		public virtual void GetObjectData(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context)
+		{
+			info.AddValue("TeamPlayerID", this.TeamPlayerID, typeof(int));
+			info.AddValue("TeamID", this.TeamID, typeof(int));
+			info.AddValue("PlayerPassID", this.PlayerPassID, typeof(int));
+			info.AddValue("IsSecondary", this.IsSecondary, typeof(bool));
+			CustomizeSerializationProcess(info, context);
+		}
+		
+		partial void CustomizeSerializationProcess(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context);
+		partial void CustomizeDeserializationProcess(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context);
+		#endregion
 	}
 }
 #pragma warning restore 1591

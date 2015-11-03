@@ -22,7 +22,8 @@ using TrackrModels;
 
 namespace TrackrModels	
 {
-	public partial class WebUserInfo
+	[System.Serializable()]
+	public partial class WebUserInfo : System.Runtime.Serialization.ISerializable
 	{
 		private int _userID;
 		public virtual int UserID
@@ -94,6 +95,33 @@ namespace TrackrModels
 			}
 		}
 		
+		#region ISerializable Implementation
+		
+		public WebUserInfo()
+		{
+		}
+		
+		protected WebUserInfo(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context)
+		{
+			this.UserID = info.GetInt32("UserID");
+			this.FName = info.GetString("FName");
+			this.MInitial = (System.Nullable<System.Char>)info.GetValue("MInitial", typeof(System.Nullable<System.Char>));
+			this.LName = info.GetString("LName");
+			CustomizeDeserializationProcess(info, context);
+		}
+		
+		public virtual void GetObjectData(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context)
+		{
+			info.AddValue("UserID", this.UserID, typeof(int));
+			info.AddValue("FName", this.FName, typeof(string));
+			info.AddValue("MInitial", this.MInitial, typeof(System.Nullable<System.Char>));
+			info.AddValue("LName", this.LName, typeof(string));
+			CustomizeSerializationProcess(info, context);
+		}
+		
+		partial void CustomizeSerializationProcess(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context);
+		partial void CustomizeDeserializationProcess(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context);
+		#endregion
 	}
 }
 #pragma warning restore 1591

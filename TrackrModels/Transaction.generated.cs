@@ -22,7 +22,8 @@ using TrackrModels;
 
 namespace TrackrModels	
 {
-	public partial class Transaction
+	[System.Serializable()]
+	public partial class Transaction : System.Runtime.Serialization.ISerializable
 	{
 		private long _transactionID;
 		public virtual long TransactionID
@@ -232,6 +233,49 @@ namespace TrackrModels
 			}
 		}
 		
+		#region ISerializable Implementation
+		
+		public Transaction()
+		{
+		}
+		
+		protected Transaction(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context)
+		{
+			this.TransactionID = info.GetInt64("TransactionID");
+			this.Amount = info.GetDecimal("Amount");
+			this.TransactionTypeID = info.GetInt32("TransactionTypeID");
+			this.PublicNotes = info.GetString("PublicNotes");
+			this.PrivateNotes = info.GetString("PrivateNotes");
+			this.Date = (DateTime)info.GetValue("Date", typeof(DateTime));
+			this.PlayerID = info.GetInt32("PlayerID");
+			this.Active = info.GetBoolean("Active");
+			this.CreateDt = (DateTime)info.GetValue("CreateDt", typeof(DateTime));
+			this.CreateUserID = info.GetInt32("CreateUserID");
+			this.ModifyDt = (DateTime?)info.GetValue("ModifyDt", typeof(DateTime?));
+			this.ModifyUserID = (int?)info.GetValue("ModifyUserID", typeof(int?));
+			CustomizeDeserializationProcess(info, context);
+		}
+		
+		public virtual void GetObjectData(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context)
+		{
+			info.AddValue("TransactionID", this.TransactionID, typeof(long));
+			info.AddValue("Amount", this.Amount, typeof(decimal));
+			info.AddValue("TransactionTypeID", this.TransactionTypeID, typeof(int));
+			info.AddValue("PublicNotes", this.PublicNotes, typeof(string));
+			info.AddValue("PrivateNotes", this.PrivateNotes, typeof(string));
+			info.AddValue("Date", this.Date, typeof(DateTime));
+			info.AddValue("PlayerID", this.PlayerID, typeof(int));
+			info.AddValue("Active", this.Active, typeof(bool));
+			info.AddValue("CreateDt", this.CreateDt, typeof(DateTime));
+			info.AddValue("CreateUserID", this.CreateUserID, typeof(int));
+			info.AddValue("ModifyDt", this.ModifyDt, typeof(DateTime?));
+			info.AddValue("ModifyUserID", this.ModifyUserID, typeof(int?));
+			CustomizeSerializationProcess(info, context);
+		}
+		
+		partial void CustomizeSerializationProcess(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context);
+		partial void CustomizeDeserializationProcess(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context);
+		#endregion
 	}
 }
 #pragma warning restore 1591

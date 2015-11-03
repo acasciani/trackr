@@ -22,7 +22,7 @@ hr {
   border-color:#dedede;
 }
 
-.wrapper , .row {
+.wrapper, .row-drawer {
    height: 100%;
    margin-left:0;
    margin-right:0;

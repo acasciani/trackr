@@ -22,7 +22,8 @@ using TrackrModels;
 
 namespace TrackrModels	
 {
-	public partial class Player
+	[System.Serializable()]
+	public partial class Player : System.Runtime.Serialization.ISerializable
 	{
 		private int _playerID;
 		public virtual int PlayerID
@@ -107,6 +108,35 @@ namespace TrackrModels
 			}
 		}
 		
+		#region ISerializable Implementation
+		
+		public Player()
+		{
+		}
+		
+		protected Player(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context)
+		{
+			this.PlayerID = info.GetInt32("PlayerID");
+			this.DateOfBirth = (DateTime)info.GetValue("DateOfBirth", typeof(DateTime));
+			this.MInitial = (System.Nullable<System.Char>)info.GetValue("MInitial", typeof(System.Nullable<System.Char>));
+			this.LName = info.GetString("LName");
+			this.FName = info.GetString("FName");
+			CustomizeDeserializationProcess(info, context);
+		}
+		
+		public virtual void GetObjectData(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context)
+		{
+			info.AddValue("PlayerID", this.PlayerID, typeof(int));
+			info.AddValue("DateOfBirth", this.DateOfBirth, typeof(DateTime));
+			info.AddValue("MInitial", this.MInitial, typeof(System.Nullable<System.Char>));
+			info.AddValue("LName", this.LName, typeof(string));
+			info.AddValue("FName", this.FName, typeof(string));
+			CustomizeSerializationProcess(info, context);
+		}
+		
+		partial void CustomizeSerializationProcess(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context);
+		partial void CustomizeDeserializationProcess(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context);
+		#endregion
 	}
 }
 #pragma warning restore 1591

@@ -22,7 +22,8 @@ using TrackrModels;
 
 namespace TrackrModels	
 {
-	public partial class PlayerPass
+	[System.Serializable()]
+	public partial class PlayerPass : System.Runtime.Serialization.ISerializable
 	{
 		private int _playerPassID;
 		public virtual int PlayerPassID
@@ -111,6 +112,35 @@ namespace TrackrModels
 			}
 		}
 		
+		#region ISerializable Implementation
+		
+		public PlayerPass()
+		{
+		}
+		
+		protected PlayerPass(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context)
+		{
+			this.PlayerPassID = info.GetInt32("PlayerPassID");
+			this.Photo = (byte[])info.GetValue("Photo", typeof(byte[]));
+			this.PassNumber = info.GetString("PassNumber");
+			this.Expires = (DateTime)info.GetValue("Expires", typeof(DateTime));
+			this.PlayerID = info.GetInt32("PlayerID");
+			CustomizeDeserializationProcess(info, context);
+		}
+		
+		public virtual void GetObjectData(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context)
+		{
+			info.AddValue("PlayerPassID", this.PlayerPassID, typeof(int));
+			info.AddValue("Photo", this.Photo, typeof(byte[]));
+			info.AddValue("PassNumber", this.PassNumber, typeof(string));
+			info.AddValue("Expires", this.Expires, typeof(DateTime));
+			info.AddValue("PlayerID", this.PlayerID, typeof(int));
+			CustomizeSerializationProcess(info, context);
+		}
+		
+		partial void CustomizeSerializationProcess(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context);
+		partial void CustomizeDeserializationProcess(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context);
+		#endregion
 	}
 }
 #pragma warning restore 1591

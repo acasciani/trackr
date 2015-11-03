@@ -16,3 +16,7 @@ body {
 
 .navbar.bottom.navbar-fixed-bottom {
 }
+
+.img-responsive{
+    display: initial;
+}

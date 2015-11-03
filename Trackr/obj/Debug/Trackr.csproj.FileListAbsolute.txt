@@ -178,7 +178,6 @@ C:\Development\trackr\Trackr\bin\System.Web.Providers.xml
 C:\Development\trackr\Trackr\obj\Debug\Trackr.csprojResolveAssemblyReference.cache
 C:\Development\trackr\Trackr\obj\Debug\Trackr.dll
 C:\Development\trackr\Trackr\obj\Debug\Trackr.pdb
-C:\Development\trackr\Trackr\bin\EntityFramework.dll
 C:\DEV\trackr\Trackr\bin\System.Web.Http.Owin.dll
 C:\DEV\trackr\Trackr\bin\Telerik.OpenAccess.DataServices.dll
 C:\DEV\trackr\Trackr\bin\Telerik.OpenAccess.dll
@@ -194,3 +193,10 @@ C:\DEV\trackr\Trackr\bin\ImageResizer.xml
 C:\DEV\trackr\Trackr\bin\ImageResizer.Plugins.SqlReader.xml
 C:\DEV\trackr\Trackr\bin\ImageResizer.Storage.pdb
 C:\DEV\trackr\Trackr\bin\ImageResizer.Storage.xml
+C:\Development\trackr\Trackr\bin\ImageResizer.dll
+C:\Development\trackr\Trackr\bin\ImageResizer.Plugins.SqlReader.dll
+C:\Development\trackr\Trackr\bin\ImageResizer.Storage.dll
+C:\Development\trackr\Trackr\bin\ImageResizer.xml
+C:\Development\trackr\Trackr\bin\ImageResizer.Plugins.SqlReader.xml
+C:\Development\trackr\Trackr\bin\ImageResizer.Storage.pdb
+C:\Development\trackr\Trackr\bin\ImageResizer.Storage.xml

@@ -22,7 +22,8 @@ using TrackrModels;
 
 namespace TrackrModels	
 {
-	public partial class TransactionType
+	[System.Serializable()]
+	public partial class TransactionType : System.Runtime.Serialization.ISerializable
 	{
 		private int _transactionTypeID;
 		public virtual int TransactionTypeID
@@ -111,6 +112,37 @@ namespace TrackrModels
 			}
 		}
 		
+		#region ISerializable Implementation
+		
+		public TransactionType()
+		{
+		}
+		
+		protected TransactionType(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context)
+		{
+			this.TransactionTypeID = info.GetInt32("TransactionTypeID");
+			this.Name = info.GetString("Name");
+			this.Description = info.GetString("Description");
+			this.ActiveStartDt = (DateTime)info.GetValue("ActiveStartDt", typeof(DateTime));
+			this.ActiveEndDt = (DateTime)info.GetValue("ActiveEndDt", typeof(DateTime));
+			this.Amount = info.GetDecimal("Amount");
+			CustomizeDeserializationProcess(info, context);
+		}
+		
+		public virtual void GetObjectData(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context)
+		{
+			info.AddValue("TransactionTypeID", this.TransactionTypeID, typeof(int));
+			info.AddValue("Name", this.Name, typeof(string));
+			info.AddValue("Description", this.Description, typeof(string));
+			info.AddValue("ActiveStartDt", this.ActiveStartDt, typeof(DateTime));
+			info.AddValue("ActiveEndDt", this.ActiveEndDt, typeof(DateTime));
+			info.AddValue("Amount", this.Amount, typeof(decimal));
+			CustomizeSerializationProcess(info, context);
+		}
+		
+		partial void CustomizeSerializationProcess(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context);
+		partial void CustomizeDeserializationProcess(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context);
+		#endregion
 	}
 }
 #pragma warning restore 1591

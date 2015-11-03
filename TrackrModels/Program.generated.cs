@@ -22,7 +22,8 @@ using TrackrModels;
 
 namespace TrackrModels	
 {
-	public partial class Program
+	[System.Serializable()]
+	public partial class Program : System.Runtime.Serialization.ISerializable
 	{
 		private int _programID;
 		public virtual int ProgramID
@@ -85,6 +86,31 @@ namespace TrackrModels
 			}
 		}
 		
+		#region ISerializable Implementation
+		
+		public Program()
+		{
+		}
+		
+		protected Program(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context)
+		{
+			this.ProgramID = info.GetInt32("ProgramID");
+			this.ProgramName = info.GetString("ProgramName");
+			this.ClubID = info.GetInt32("ClubID");
+			CustomizeDeserializationProcess(info, context);
+		}
+		
+		public virtual void GetObjectData(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context)
+		{
+			info.AddValue("ProgramID", this.ProgramID, typeof(int));
+			info.AddValue("ProgramName", this.ProgramName, typeof(string));
+			info.AddValue("ClubID", this.ClubID, typeof(int));
+			CustomizeSerializationProcess(info, context);
+		}
+		
+		partial void CustomizeSerializationProcess(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context);
+		partial void CustomizeDeserializationProcess(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context);
+		#endregion
 	}
 }
 #pragma warning restore 1591

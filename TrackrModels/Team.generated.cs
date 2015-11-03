@@ -22,7 +22,8 @@ using TrackrModels;
 
 namespace TrackrModels	
 {
-	public partial class Team
+	[System.Serializable()]
+	public partial class Team : System.Runtime.Serialization.ISerializable
 	{
 		private int _teamID;
 		public virtual int TeamID
@@ -137,6 +138,39 @@ namespace TrackrModels
 			}
 		}
 		
+		#region ISerializable Implementation
+		
+		public Team()
+		{
+		}
+		
+		protected Team(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context)
+		{
+			this.TeamID = info.GetInt32("TeamID");
+			this.TeamName = info.GetString("TeamName");
+			this.ProgramID = info.GetInt32("ProgramID");
+			this.StartYear = (DateTime)info.GetValue("StartYear", typeof(DateTime));
+			this.EndYear = (DateTime)info.GetValue("EndYear", typeof(DateTime));
+			this.MaxRosterSize = info.GetInt16("MaxRosterSize");
+			this.MinRosterSize = info.GetInt16("MinRosterSize");
+			CustomizeDeserializationProcess(info, context);
+		}
+		
+		public virtual void GetObjectData(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context)
+		{
+			info.AddValue("TeamID", this.TeamID, typeof(int));
+			info.AddValue("TeamName", this.TeamName, typeof(string));
+			info.AddValue("ProgramID", this.ProgramID, typeof(int));
+			info.AddValue("StartYear", this.StartYear, typeof(DateTime));
+			info.AddValue("EndYear", this.EndYear, typeof(DateTime));
+			info.AddValue("MaxRosterSize", this.MaxRosterSize, typeof(short));
+			info.AddValue("MinRosterSize", this.MinRosterSize, typeof(short));
+			CustomizeSerializationProcess(info, context);
+		}
+		
+		partial void CustomizeSerializationProcess(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context);
+		partial void CustomizeDeserializationProcess(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context);
+		#endregion
 	}
 }
 #pragma warning restore 1591

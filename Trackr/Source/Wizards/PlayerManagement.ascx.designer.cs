@@ -121,6 +121,42 @@ namespace Trackr.Source.Wizards {
         protected global::System.Web.UI.WebControls.WizardStep Step2_Picture;
         
         /// <summary>
+        /// gvPlayerPasses control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView gvPlayerPasses;
+        
+        /// <summary>
+        /// pnlAddEditPass control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel pnlAddEditPass;
+        
+        /// <summary>
+        /// txtPassExpires control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtPassExpires;
+        
+        /// <summary>
+        /// validatorPlayerPassExpiresValid control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CustomValidator validatorPlayerPassExpiresValid;
+        
+        /// <summary>
         /// uploadPlayerPass control.
         /// </summary>
         /// <remarks>
@@ -137,6 +173,24 @@ namespace Trackr.Source.Wizards {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.LinkButton lnkUpload;
+        
+        /// <summary>
+        /// lnkReloadImage control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton lnkReloadImage;
+        
+        /// <summary>
+        /// lnkSavePlayerPass control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton lnkSavePlayerPass;
         
         /// <summary>
         /// divPreview control.
@@ -164,6 +218,24 @@ namespace Trackr.Source.Wizards {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.WizardStep Step3_Teams;
+        
+        /// <summary>
+        /// gvTeamAssignments control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView gvTeamAssignments;
+        
+        /// <summary>
+        /// pnlTeamAssignment control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel pnlTeamAssignment;
         
         /// <summary>
         /// lnkEditAgain control.
