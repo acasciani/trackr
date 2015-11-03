@@ -29,11 +29,11 @@ namespace Trackr
             }
         }
 
-        public void CheckAllowed(string permission, int resourceID)
+        public void CheckAllowed<T,K,Q>(string permission, Q resourceID) where T : IScopable<K, Q>, IDisposable, new()
         {
-            using (WebUsersController wuc = new WebUsersController())
+            using (T c = new T())
             {
-                if (!wuc.IsUserScoped(CurrentUser.UserID, permission, resourceID))
+                if (!c.IsUserScoped(CurrentUser.UserID, permission, resourceID))
                 {
                     Response.Redirect("~/Default.aspx", true);
                 }

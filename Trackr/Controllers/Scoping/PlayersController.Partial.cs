@@ -5,13 +5,14 @@ using System.Net;
 using System.Net.Http;
 using System.Web;
 using System.Web.Http;
+using Telerik.OpenAccess.FetchOptimization;
 using TrackrModels;
 
 namespace Trackr
 {
     public partial class PlayersController : OpenAccessBaseApiController<TrackrModels.Player, TrackrModels.ClubManagement>, IScopable<Player, int>
     {
-        public List<Player> GetScopedEntities(int UserID, string permission)
+        public List<Player> GetScopedEntities(int UserID, string permission, FetchStrategy fetchStrategy = null)
         {
             ScopeController sc = new ScopeController();
             var assignments = sc.GetScopeAssignments(UserID, permission);
@@ -19,7 +20,7 @@ namespace Trackr
             List<Player> players = new List<Player>();
             foreach (ScopeAssignment assignment in assignments)
             {
-                players.AddRange(GetScopedEntities(assignment));
+                players.AddRange(GetScopedEntities(assignment, fetchStrategy));
             }
 
             return players;
@@ -39,7 +40,7 @@ namespace Trackr
             return ids;
         }
 
-        public Player GetScopedEntity(int UserID, string permission, int entityID)
+        public Player GetScopedEntity(int UserID, string permission, int entityID, FetchStrategy fetchStrategy = null)
         {
             ScopeController sc = new ScopeController();
             var assignments = sc.GetScopeAssignments(UserID, permission);
@@ -48,7 +49,14 @@ namespace Trackr
             {
                 if (GetScopedIDs(assignment).Contains(entityID))
                 {
-                    return Get(entityID);
+                    if (fetchStrategy == null)
+                    {
+                        return Get(entityID);
+                    }
+                    else
+                    {
+                        return GetWhere(i => i.PlayerID == entityID, fetchStrategy).First();
+                    }
                 }
             }
 
@@ -87,10 +95,18 @@ namespace Trackr
             return playerIDs;
         }
 
-        private IQueryable<Player> GetScopedEntities(ScopeAssignment scopeAssignment)
+        private IQueryable<Player> GetScopedEntities(ScopeAssignment scopeAssignment, FetchStrategy fetchStrategy = null)
         {
             List<int> scopedIDs = GetScopedIDs(scopeAssignment);
-            return Get().Where(i => scopedIDs.Contains(i.PlayerID));
+
+            if (fetchStrategy == null)
+            {
+                return GetWhere(i => scopedIDs.Contains(i.PlayerID));
+            }
+            else
+            {
+                return GetWhere(i => scopedIDs.Contains(i.PlayerID), fetchStrategy);
+            }
         }
     }
 }

@@ -98,12 +98,12 @@ namespace TrackrModels
 			}
 		}
 		
-		private IList<TeamPlayer> _teamPlayers = new List<TeamPlayer>();
-		public virtual IList<TeamPlayer> TeamPlayers
+		private IList<PlayerPass> _playerPasses = new List<PlayerPass>();
+		public virtual IList<PlayerPass> PlayerPasses
 		{
 			get
 			{
-				return this._teamPlayers;
+				return this._playerPasses;
 			}
 		}
 		

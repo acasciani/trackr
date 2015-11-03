@@ -106,6 +106,14 @@ namespace TrackrModels
 			}
 		}
 		
+		public IQueryable<PlayerPass> PlayerPasses 
+		{
+			get
+			{
+				return this.GetAll<PlayerPass>();
+			}
+		}
+		
 		public IQueryable<TeamPlayer> TeamPlayers 
 		{
 			get
@@ -160,6 +168,10 @@ namespace TrackrModels
 			get;
 		}
 		IQueryable<Club> Clubs
+		{
+			get;
+		}
+		IQueryable<PlayerPass> PlayerPasses
 		{
 			get;
 		}

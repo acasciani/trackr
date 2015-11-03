@@ -164,8 +164,8 @@
             <orm:constraint name="FK_Teams_Teams" delete-action="dbdefaultrule" destination-table="Programs" />
           </orm:reference>
         </orm:field>
-        <orm:field name="_teamPlayers" property="TeamPlayers" behavior="readwrite" uniqueId="2f0a7989-eabd-431e-a87b-e6a5773cef00" type="TrackrModels.TeamPlayer">
-          <orm:collection element-class="TrackrModels.TeamPlayer" inverse-field="_team" order-by="" uniqueId="b6540c26-591d-4703-af7f-003f6cbcfae5" />
+        <orm:field name="_teamPlayers" property="TeamPlayers" behavior="readwrite" uniqueId="9010a595-f702-4a4b-b7e9-61ab4ae42577" type="TrackrModels.TeamPlayer">
+          <orm:collection element-class="TrackrModels.TeamPlayer" inverse-field="_team" order-by="" uniqueId="1461b9d0-65bc-467d-9222-6db6886f1d17" />
         </orm:field>
       </orm:class>
       <orm:class name="Program" uniqueId="bc797f95-9d5f-4138-98ff-2a39f4bd70cd">
@@ -223,8 +223,8 @@
         <orm:field name="_transactions" property="Transactions" behavior="readwrite" uniqueId="122a83c1-04f6-4f33-b753-3b5e1abc181b" type="TrackrModels.Transaction">
           <orm:collection element-class="TrackrModels.Transaction" inverse-field="_player" order-by="" uniqueId="17d53c36-6bbf-4829-b016-49606933865a" />
         </orm:field>
-        <orm:field name="_teamPlayers" property="TeamPlayers" behavior="readwrite" uniqueId="d17799e8-28b1-43e7-924a-1e5cc6807706" type="TrackrModels.TeamPlayer">
-          <orm:collection element-class="TrackrModels.TeamPlayer" inverse-field="_player" order-by="" uniqueId="fd95f50a-269e-4ade-8354-d1de5272624e" />
+        <orm:field name="_playerPasses" property="PlayerPasses" behavior="readwrite" uniqueId="2d7c350e-7531-41e1-97d3-cb7cf2162daa" type="TrackrModels.PlayerPass">
+          <orm:collection element-class="TrackrModels.PlayerPass" inverse-field="_player" order-by="" uniqueId="74c4dc34-7df3-42a3-930f-8f4c12703f0d" />
         </orm:field>
       </orm:class>
       <orm:class name="Club" uniqueId="bbc75fb2-a0dc-4d4c-9c46-3acd3a92fce7">
@@ -246,7 +246,41 @@
           <orm:collection element-class="TrackrModels.Program" inverse-field="_club" order-by="" uniqueId="d5abb3e9-2dd5-4453-a355-45918f1fef23" />
         </orm:field>
       </orm:class>
-      <orm:class name="TeamPlayer" uniqueId="ce48eadd-6106-4198-8339-be88d86975bb">
+      <orm:class name="PlayerPass" uniqueId="cc46e759-acc2-42af-82bd-c75dee018045">
+        <orm:table name="PlayerPasses" />
+        <orm:identity>
+          <orm:key-generator name="autoinc">
+            <orm:key-generator-member property-name="PlayerPassID" />
+          </orm:key-generator>
+          <orm:single-field field-name="_playerPassID" />
+        </orm:identity>
+        <orm:concurrency strategy="changed" />
+        <orm:field name="_playerPassID" property="PlayerPassID" behavior="readwrite" uniqueId="5f28d80b-6e3f-42f1-bd7a-ecc8e3074e07" type="System.Int32">
+          <orm:column name="PlayerPassID" sql-type="int" nullable="false" length="0" scale="0" primary-key="true" backend-calculated="true" ado-type="Int32" />
+        </orm:field>
+        <orm:field name="_photo" property="Photo" behavior="readwrite" uniqueId="c415f7f8-f558-495b-a9e4-b3538de8a415" type="System.Byte[]">
+          <orm:column name="Photo" sql-type="varbinary(max)" nullable="true" length="0" scale="0" ado-type="LongVarBinary" />
+        </orm:field>
+        <orm:field name="_passNumber" property="PassNumber" behavior="readwrite" uniqueId="2b38b592-ff02-44ae-8aca-bb7a247fef7d" type="System.String">
+          <orm:column name="PassNumber" sql-type="nvarchar" nullable="true" length="50" scale="0" ado-type="UnicodeStringVariableLength" />
+        </orm:field>
+        <orm:field name="_expires" property="Expires" behavior="readwrite" uniqueId="3b7ba48a-ff3f-42e4-a7a3-475bed30f26e" type="System.DateTime">
+          <orm:column name="Expires" sql-type="date" nullable="false" length="0" scale="0" ado-type="Date" />
+        </orm:field>
+        <orm:field name="_playerID" property="PlayerID" behavior="readwrite" uniqueId="bfecd7ce-8e7a-446f-8e29-27b36a79c9a5" type="System.Int32">
+          <orm:column name="PlayerID" sql-type="int" nullable="false" length="0" scale="0" ado-type="Int32" />
+        </orm:field>
+        <orm:field name="_player" property="Player" behavior="readwrite" uniqueId="68c19f5b-cfae-4fcb-a83d-34fa629555f4" type="TrackrModels.Player">
+          <orm:reference uniqueId="74c4dc34-7df3-42a3-930f-8f4c12703f0d" association-name="PlayerPassHasPlayer">
+            <orm:sharedfield name="_playerID" target-class="TrackrModels.Player" target-field="_playerID" />
+            <orm:constraint name="FK_PlayerPasses_Players" delete-action="dbdefaultrule" destination-table="Players" />
+          </orm:reference>
+        </orm:field>
+        <orm:field name="_teamPlayers" property="TeamPlayers" behavior="readwrite" uniqueId="78b6c29b-3d7a-456b-a1e4-89c13a986c58" type="TrackrModels.TeamPlayer">
+          <orm:collection element-class="TrackrModels.TeamPlayer" inverse-field="_playerPass" order-by="" uniqueId="d817665e-6fc0-421b-9d2e-72ffa1db1937" />
+        </orm:field>
+      </orm:class>
+      <orm:class name="TeamPlayer" uniqueId="f459290d-2db6-4ca4-9f7d-d582a9160ad8">
         <orm:table name="TeamPlayers" />
         <orm:identity>
           <orm:key-generator name="autoinc">
@@ -255,34 +289,28 @@
           <orm:single-field field-name="_teamPlayerID" />
         </orm:identity>
         <orm:concurrency strategy="changed" />
-        <orm:field name="_teamPlayerID" property="TeamPlayerID" behavior="readwrite" uniqueId="b7fc844e-e3f9-47c6-9bd4-86aa4628e323" type="System.Int32">
+        <orm:field name="_teamPlayerID" property="TeamPlayerID" behavior="readwrite" uniqueId="0ba9931e-b47d-4906-83c0-c1c91174b6fe" type="System.Int32">
           <orm:column name="TeamPlayerID" sql-type="int" nullable="false" length="0" scale="0" primary-key="true" backend-calculated="true" ado-type="Int32" />
         </orm:field>
-        <orm:field name="_teamID" property="TeamID" behavior="readwrite" uniqueId="e2a9f6bd-1cb0-4b86-b58c-b6b453e676c5" type="System.Int32">
+        <orm:field name="_teamID" property="TeamID" behavior="readwrite" uniqueId="67336a62-2a71-4e6a-a18d-70077ad711f7" type="System.Int32">
           <orm:column name="TeamID" sql-type="int" nullable="false" length="0" scale="0" ado-type="Int32" />
         </orm:field>
-        <orm:field name="_playerID" property="PlayerID" behavior="readwrite" uniqueId="0925fb20-d885-4135-8b2b-3600a74384a0" type="System.Int32">
-          <orm:column name="PlayerID" sql-type="int" nullable="false" length="0" scale="0" ado-type="Int32" />
+        <orm:field name="_playerPassID" property="PlayerPassID" behavior="readwrite" uniqueId="f4d4933e-086f-4a5f-a6ed-6e5e10cbd8b0" type="System.Int32">
+          <orm:column name="PlayerPassID" sql-type="int" nullable="false" length="0" scale="0" ado-type="Int32" />
         </orm:field>
-        <orm:field name="_passID" property="PassID" behavior="readwrite" uniqueId="b4fdd9f3-b0d4-4589-a227-27ad0fd8691f" type="System.String">
-          <orm:column name="PassID" sql-type="nvarchar" nullable="true" length="50" scale="0" ado-type="UnicodeStringVariableLength" />
-        </orm:field>
-        <orm:field name="_picture" property="Picture" behavior="readwrite" uniqueId="a2742c85-5158-47b2-b8ed-cdc880116048" type="System.Byte[]">
-          <orm:column name="Picture" sql-type="binary" nullable="true" length="1000" scale="0" ado-type="Binary" />
-        </orm:field>
-        <orm:field name="_isSecondary" property="IsSecondary" behavior="readwrite" uniqueId="55bf2e18-9b92-440d-b06f-003f7ff3686c" type="System.Boolean">
+        <orm:field name="_isSecondary" property="IsSecondary" behavior="readwrite" uniqueId="b13547d2-0131-4dd4-b696-fa0549b43792" type="System.Boolean">
           <orm:column name="IsSecondary" sql-type="bit" nullable="false" length="0" scale="0" has-default-value="true" ado-type="Bit" />
         </orm:field>
-        <orm:field name="_team" property="Team" behavior="readwrite" uniqueId="c191ab59-0855-4c22-85f7-0571bb8ab121" type="TrackrModels.Team">
-          <orm:reference uniqueId="b6540c26-591d-4703-af7f-003f6cbcfae5" association-name="TeamPlayerHasTeam">
+        <orm:field name="_team" property="Team" behavior="readwrite" uniqueId="ee6d90d0-0553-43a8-8e33-4fab5c6e741f" type="TrackrModels.Team">
+          <orm:reference uniqueId="1461b9d0-65bc-467d-9222-6db6886f1d17" association-name="TeamPlayerHasTeam">
             <orm:sharedfield name="_teamID" target-class="TrackrModels.Team" target-field="_teamID" />
             <orm:constraint name="FK_TeamPlayers_Teams" delete-action="dbdefaultrule" destination-table="Teams" />
           </orm:reference>
         </orm:field>
-        <orm:field name="_player" property="Player" behavior="readwrite" uniqueId="55899e70-82d1-4697-aed3-07992f3069ed" type="TrackrModels.Player">
-          <orm:reference uniqueId="fd95f50a-269e-4ade-8354-d1de5272624e" association-name="TeamPlayerHasPlayer">
-            <orm:sharedfield name="_playerID" target-class="TrackrModels.Player" target-field="_playerID" />
-            <orm:constraint name="FK_TeamPlayers_Players" delete-action="dbdefaultrule" destination-table="Players" />
+        <orm:field name="_playerPass" property="PlayerPass" behavior="readwrite" uniqueId="a87a4db3-77d9-4288-b329-925cf38a084f" type="TrackrModels.PlayerPass">
+          <orm:reference uniqueId="d817665e-6fc0-421b-9d2e-72ffa1db1937" association-name="TeamPlayerHasPlayerPass">
+            <orm:sharedfield name="_playerPassID" target-class="TrackrModels.PlayerPass" target-field="_playerPassID" />
+            <orm:constraint name="FK_TeamPlayers_PlayerPasses" delete-action="dbdefaultrule" destination-table="PlayerPasses" />
           </orm:reference>
         </orm:field>
       </orm:class>
@@ -359,18 +387,26 @@
         <orm:column name="ClubID" sql-type="int" nullable="false" length="0" scale="0" primary-key="true" backend-calculated="true" ado-type="Int32" />
         <orm:column name="ClubName" sql-type="varchar" nullable="false" length="100" scale="0" ado-type="StringVariableLength" />
       </orm:table>
+      <orm:table name="PlayerPasses">
+        <orm:column name="PlayerPassID" sql-type="int" nullable="false" length="0" scale="0" primary-key="true" backend-calculated="true" ado-type="Int32" />
+        <orm:column name="Photo" sql-type="varbinary(max)" nullable="true" length="0" scale="0" ado-type="LongVarBinary" />
+        <orm:column name="PassNumber" sql-type="nvarchar" nullable="true" length="50" scale="0" ado-type="UnicodeStringVariableLength" />
+        <orm:column name="Expires" sql-type="date" nullable="false" length="0" scale="0" ado-type="Date" />
+        <orm:column name="PlayerID" sql-type="int" nullable="false" length="0" scale="0" ado-type="Int32" />
+        <orm:constraint name="FK_PlayerPasses_Players" delete-action="dbdefaultrule" destination-table="Players">
+          <orm:column name="PlayerID" sql-type="int" nullable="false" length="0" scale="0" ado-type="Int32" />
+        </orm:constraint>
+      </orm:table>
       <orm:table name="TeamPlayers">
         <orm:column name="TeamPlayerID" sql-type="int" nullable="false" length="0" scale="0" primary-key="true" backend-calculated="true" ado-type="Int32" />
         <orm:column name="TeamID" sql-type="int" nullable="false" length="0" scale="0" ado-type="Int32" />
-        <orm:column name="PlayerID" sql-type="int" nullable="false" length="0" scale="0" ado-type="Int32" />
-        <orm:column name="PassID" sql-type="nvarchar" nullable="true" length="50" scale="0" ado-type="UnicodeStringVariableLength" />
-        <orm:column name="Picture" sql-type="binary" nullable="true" length="1000" scale="0" ado-type="Binary" />
+        <orm:column name="PlayerPassID" sql-type="int" nullable="false" length="0" scale="0" ado-type="Int32" />
         <orm:column name="IsSecondary" sql-type="bit" nullable="false" length="0" scale="0" has-default-value="true" ado-type="Bit" />
         <orm:constraint name="FK_TeamPlayers_Teams" delete-action="dbdefaultrule" destination-table="Teams">
           <orm:column name="TeamID" sql-type="int" nullable="false" length="0" scale="0" ado-type="Int32" />
         </orm:constraint>
-        <orm:constraint name="FK_TeamPlayers_Players" delete-action="dbdefaultrule" destination-table="Players">
-          <orm:column name="PlayerID" sql-type="int" nullable="false" length="0" scale="0" ado-type="Int32" />
+        <orm:constraint name="FK_TeamPlayers_PlayerPasses" delete-action="dbdefaultrule" destination-table="PlayerPasses">
+          <orm:column name="PlayerPassID" sql-type="int" nullable="false" length="0" scale="0" ado-type="Int32" />
         </orm:constraint>
       </orm:table>
     </orm:schema>
@@ -545,8 +581,8 @@
         <classHasNavigationalProperties Id="b47b4613-db68-402d-979b-5a88ced68d2b">
           <NavigationalProperty Id="332d180a-e615-481f-b524-3bcb0d500dce" name="Program" type="Program" label="Program : Program" nullable="true" kind="Persistent" fieldName="_program" isDependent="false" isManaged="false" />
         </classHasNavigationalProperties>
-        <classHasNavigationalProperties Id="d7927071-292d-4115-a1a5-4e0ad2dada84">
-          <NavigationalProperty Id="2f0a7989-eabd-431e-a87b-e6a5773cef00" name="TeamPlayers" type="IList&lt;TeamPlayer&gt;" label="TeamPlayers : IList&lt;TeamPlayer&gt;" nullable="true" kind="Persistent" fieldName="_teamPlayers" isDependent="false" isManaged="false" />
+        <classHasNavigationalProperties Id="ac82c12e-61d8-4b58-832e-263576e448c5">
+          <NavigationalProperty Id="9010a595-f702-4a4b-b7e9-61ab4ae42577" name="TeamPlayers" type="IList&lt;TeamPlayer&gt;" label="TeamPlayers : IList&lt;TeamPlayer&gt;" nullable="true" kind="Persistent" fieldName="_teamPlayers" isDependent="false" isManaged="false" />
         </classHasNavigationalProperties>
       </navigationalProperties>
     </DomainClass>
@@ -588,8 +624,8 @@
         <classHasNavigationalProperties Id="67f2ba34-a527-429c-80d2-ab38dc7961ab">
           <NavigationalProperty Id="122a83c1-04f6-4f33-b753-3b5e1abc181b" name="Transactions" type="IList&lt;Transaction&gt;" label="Transactions : IList&lt;Transaction&gt;" nullable="true" kind="Persistent" fieldName="_transactions" isDependent="false" isManaged="false" />
         </classHasNavigationalProperties>
-        <classHasNavigationalProperties Id="52ec75a9-a0ce-4b42-8ed3-56aea2e35226">
-          <NavigationalProperty Id="d17799e8-28b1-43e7-924a-1e5cc6807706" name="TeamPlayers" type="IList&lt;TeamPlayer&gt;" label="TeamPlayers : IList&lt;TeamPlayer&gt;" nullable="true" kind="Persistent" fieldName="_teamPlayers" isDependent="false" isManaged="false" />
+        <classHasNavigationalProperties Id="b0421cca-1d07-4b6b-a7fd-d27697990fc7">
+          <NavigationalProperty Id="2d7c350e-7531-41e1-97d3-cb7cf2162daa" name="PlayerPasses" type="IList&lt;PlayerPass&gt;" label="PlayerPasses : IList&lt;PlayerPass&gt;" nullable="true" kind="Persistent" fieldName="_playerPasses" isDependent="false" isManaged="false" />
         </classHasNavigationalProperties>
       </navigationalProperties>
     </DomainClass>
@@ -602,47 +638,75 @@
         </classHasNavigationalProperties>
       </navigationalProperties>
     </DomainClass>
-    <DomainClass Id="ce48eadd-6106-4198-8339-be88d86975bb" name="TeamPlayer" namespace="TrackrModels" showPropertiesCompartment="true" identityMechanism="DatabaseServerCalculated" concurrencyMode="Changed" showNavigationCompartment="true" showImplementationCompartment="true" identityMechanismMember="TeamPlayerID">
-      <Property Id="b7fc844e-e3f9-47c6-9bd4-86aa4628e323" name="TeamPlayerID" type="Int32" label="TeamPlayerID : Int32" kind="Persistent" identity="true" fieldName="_teamPlayerID" />
-      <Property Id="55bf2e18-9b92-440d-b06f-003f7ff3686c" name="IsSecondary" type="Boolean" label="IsSecondary : Boolean" kind="Persistent" fieldName="_isSecondary" />
-      <Property Id="b4fdd9f3-b0d4-4589-a227-27ad0fd8691f" name="PassID" label="PassID : String" kind="Persistent" fieldName="_passID" />
-      <Property Id="a2742c85-5158-47b2-b8ed-cdc880116048" name="Picture" type="Byte[]" label="Picture : Byte[]" kind="Persistent" fieldName="_picture" />
-      <Property Id="0925fb20-d885-4135-8b2b-3600a74384a0" name="PlayerID" type="Int32" label="PlayerID : Int32" kind="Persistent" fieldName="_playerID" />
-      <Property Id="e2a9f6bd-1cb0-4b86-b58c-b6b453e676c5" name="TeamID" type="Int32" label="TeamID : Int32" kind="Persistent" fieldName="_teamID" />
+    <DomainClass Id="cc46e759-acc2-42af-82bd-c75dee018045" name="PlayerPass" namespace="TrackrModels" showPropertiesCompartment="true" identityMechanism="DatabaseServerCalculated" concurrencyMode="Changed" showNavigationCompartment="true" showImplementationCompartment="true" identityMechanismMember="PlayerPassID">
+      <Property Id="5f28d80b-6e3f-42f1-bd7a-ecc8e3074e07" name="PlayerPassID" type="Int32" label="PlayerPassID : Int32" kind="Persistent" identity="true" fieldName="_playerPassID" />
+      <Property Id="3b7ba48a-ff3f-42e4-a7a3-475bed30f26e" name="Expires" type="DateTime" label="Expires : DateTime" kind="Persistent" fieldName="_expires" />
+      <Property Id="2b38b592-ff02-44ae-8aca-bb7a247fef7d" name="PassNumber" label="PassNumber : String" kind="Persistent" fieldName="_passNumber" />
+      <Property Id="c415f7f8-f558-495b-a9e4-b3538de8a415" name="Photo" type="Byte[]" label="Photo : Byte[]" kind="Persistent" fieldName="_photo" />
+      <Property Id="bfecd7ce-8e7a-446f-8e29-27b36a79c9a5" name="PlayerID" type="Int32" label="PlayerID : Int32" kind="Persistent" fieldName="_playerID" />
       <AssociationTargets>
-        <Association Id="b6540c26-591d-4703-af7f-003f6cbcfae5" SourceMultiplicity="One" name="TeamPlayerHasTeam">
-          <DomainClassMoniker name="/ClubManagement/Team" />
-          <targetNavigationalProperty>
-            <associationDefinesTargetProperty Id="0c2ec1c1-c6d2-4a1e-9577-1846254fb3d8">
-              <NavigationalPropertyMoniker name="/ClubManagement/Team/TeamPlayers" />
-            </associationDefinesTargetProperty>
-          </targetNavigationalProperty>
-          <sourceNavigationalProperty>
-            <associationDefinesSourceProperty Id="44df334f-485f-4902-bbcb-9ce1026652d9">
-              <NavigationalPropertyMoniker name="/ClubManagement/TeamPlayer/Team" />
-            </associationDefinesSourceProperty>
-          </sourceNavigationalProperty>
-        </Association>
-        <Association Id="fd95f50a-269e-4ade-8354-d1de5272624e" SourceMultiplicity="One" name="TeamPlayerHasPlayer">
+        <Association Id="74c4dc34-7df3-42a3-930f-8f4c12703f0d" SourceMultiplicity="One" name="PlayerPassHasPlayer">
           <DomainClassMoniker name="/ClubManagement/Player" />
           <targetNavigationalProperty>
-            <associationDefinesTargetProperty Id="8a9385b0-94c5-4711-a940-99be86803e7a">
-              <NavigationalPropertyMoniker name="/ClubManagement/Player/TeamPlayers" />
+            <associationDefinesTargetProperty Id="0bde0330-7a2b-44bf-a4ad-153d631aa9b4">
+              <NavigationalPropertyMoniker name="/ClubManagement/Player/PlayerPasses" />
             </associationDefinesTargetProperty>
           </targetNavigationalProperty>
           <sourceNavigationalProperty>
-            <associationDefinesSourceProperty Id="5789c3b8-25db-472c-aa60-2584e51cf488">
-              <NavigationalPropertyMoniker name="/ClubManagement/TeamPlayer/Player" />
+            <associationDefinesSourceProperty Id="0a49e054-4f0a-468d-a8a4-8be6829013ef">
+              <NavigationalPropertyMoniker name="/ClubManagement/PlayerPass/Player" />
             </associationDefinesSourceProperty>
           </sourceNavigationalProperty>
         </Association>
       </AssociationTargets>
       <navigationalProperties>
-        <classHasNavigationalProperties Id="7e9a6130-0091-4971-ada9-e59e2475cebd">
-          <NavigationalProperty Id="c191ab59-0855-4c22-85f7-0571bb8ab121" name="Team" type="Team" label="Team : Team" nullable="true" kind="Persistent" fieldName="_team" isDependent="false" isManaged="false" />
+        <classHasNavigationalProperties Id="34a07d64-e6bb-4951-8298-0ad1014203c4">
+          <NavigationalProperty Id="68c19f5b-cfae-4fcb-a83d-34fa629555f4" name="Player" type="Player" label="Player : Player" nullable="true" kind="Persistent" fieldName="_player" isDependent="false" isManaged="false" />
         </classHasNavigationalProperties>
-        <classHasNavigationalProperties Id="35274db2-e8ad-474d-af15-f24becb7f1af">
-          <NavigationalProperty Id="55899e70-82d1-4697-aed3-07992f3069ed" name="Player" type="Player" label="Player : Player" nullable="true" kind="Persistent" fieldName="_player" isDependent="false" isManaged="false" />
+        <classHasNavigationalProperties Id="bd1f4e71-f865-4008-b2a2-38808971f362">
+          <NavigationalProperty Id="78b6c29b-3d7a-456b-a1e4-89c13a986c58" name="TeamPlayers" type="IList&lt;TeamPlayer&gt;" label="TeamPlayers : IList&lt;TeamPlayer&gt;" nullable="true" kind="Persistent" fieldName="_teamPlayers" isDependent="false" isManaged="false" />
+        </classHasNavigationalProperties>
+      </navigationalProperties>
+    </DomainClass>
+    <DomainClass Id="f459290d-2db6-4ca4-9f7d-d582a9160ad8" name="TeamPlayer" namespace="TrackrModels" showPropertiesCompartment="true" identityMechanism="DatabaseServerCalculated" concurrencyMode="Changed" showNavigationCompartment="true" showImplementationCompartment="true" identityMechanismMember="TeamPlayerID">
+      <Property Id="0ba9931e-b47d-4906-83c0-c1c91174b6fe" name="TeamPlayerID" type="Int32" label="TeamPlayerID : Int32" kind="Persistent" identity="true" fieldName="_teamPlayerID" />
+      <Property Id="b13547d2-0131-4dd4-b696-fa0549b43792" name="IsSecondary" type="Boolean" label="IsSecondary : Boolean" kind="Persistent" fieldName="_isSecondary" />
+      <Property Id="f4d4933e-086f-4a5f-a6ed-6e5e10cbd8b0" name="PlayerPassID" type="Int32" label="PlayerPassID : Int32" kind="Persistent" fieldName="_playerPassID" />
+      <Property Id="67336a62-2a71-4e6a-a18d-70077ad711f7" name="TeamID" type="Int32" label="TeamID : Int32" kind="Persistent" fieldName="_teamID" />
+      <AssociationTargets>
+        <Association Id="1461b9d0-65bc-467d-9222-6db6886f1d17" SourceMultiplicity="One" name="TeamPlayerHasTeam">
+          <DomainClassMoniker name="/ClubManagement/Team" />
+          <targetNavigationalProperty>
+            <associationDefinesTargetProperty Id="d1974d9a-6572-4a7e-b376-51a1eceec53b">
+              <NavigationalPropertyMoniker name="/ClubManagement/Team/TeamPlayers" />
+            </associationDefinesTargetProperty>
+          </targetNavigationalProperty>
+          <sourceNavigationalProperty>
+            <associationDefinesSourceProperty Id="206c5145-5716-48a9-be76-94b0ec2ab3f3">
+              <NavigationalPropertyMoniker name="/ClubManagement/TeamPlayer/Team" />
+            </associationDefinesSourceProperty>
+          </sourceNavigationalProperty>
+        </Association>
+        <Association Id="d817665e-6fc0-421b-9d2e-72ffa1db1937" SourceMultiplicity="One" name="TeamPlayerHasPlayerPass">
+          <DomainClassMoniker name="/ClubManagement/PlayerPass" />
+          <targetNavigationalProperty>
+            <associationDefinesTargetProperty Id="a0a0d03e-445e-4b8e-91fb-7dc4173a1796">
+              <NavigationalPropertyMoniker name="/ClubManagement/PlayerPass/TeamPlayers" />
+            </associationDefinesTargetProperty>
+          </targetNavigationalProperty>
+          <sourceNavigationalProperty>
+            <associationDefinesSourceProperty Id="29386693-bc88-4dfe-9e0b-e494260bfe01">
+              <NavigationalPropertyMoniker name="/ClubManagement/TeamPlayer/PlayerPass" />
+            </associationDefinesSourceProperty>
+          </sourceNavigationalProperty>
+        </Association>
+      </AssociationTargets>
+      <navigationalProperties>
+        <classHasNavigationalProperties Id="d612baae-9e05-4e23-b56a-bb18093e74d3">
+          <NavigationalProperty Id="ee6d90d0-0553-43a8-8e33-4fab5c6e741f" name="Team" type="Team" label="Team : Team" nullable="true" kind="Persistent" fieldName="_team" isDependent="false" isManaged="false" />
+        </classHasNavigationalProperties>
+        <classHasNavigationalProperties Id="7398af11-7293-49df-b58c-f97fc9805a70">
+          <NavigationalProperty Id="a87a4db3-77d9-4288-b329-925cf38a084f" name="PlayerPass" type="PlayerPass" label="PlayerPass : PlayerPass" nullable="true" kind="Persistent" fieldName="_playerPass" isDependent="false" isManaged="false" />
         </classHasNavigationalProperties>
       </navigationalProperties>
     </DomainClass>
@@ -657,6 +721,7 @@
         <entitySetProperty name="Programs" namespace="TrackrModels" type="Program" label="Programs : IQueryable&lt;TrackrModels.Program&gt;" />
         <entitySetProperty name="Players" namespace="TrackrModels" type="Player" label="Players : IQueryable&lt;TrackrModels.Player&gt;" />
         <entitySetProperty name="Clubs" namespace="TrackrModels" type="Club" label="Clubs : IQueryable&lt;TrackrModels.Club&gt;" />
+        <entitySetProperty name="PlayerPasses" namespace="TrackrModels" type="PlayerPass" label="PlayerPasses : IQueryable&lt;TrackrModels.PlayerPass&gt;" />
         <entitySetProperty name="TeamPlayers" namespace="TrackrModels" type="TeamPlayer" label="TeamPlayers : IQueryable&lt;TrackrModels.TeamPlayer&gt;" />
       </domainContainer>
     </domainModelHasDomainContext>

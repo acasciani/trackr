@@ -38,6 +38,15 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ImageResizer">
+      <HintPath>..\packages\ImageResizer.4.0.4\lib\net45\ImageResizer.dll</HintPath>
+    </Reference>
+    <Reference Include="ImageResizer.Plugins.SqlReader">
+      <HintPath>..\packages\ImageResizer.Plugins.SqlReader.4.0.4\lib\net45\ImageResizer.Plugins.SqlReader.dll</HintPath>
+    </Reference>
+    <Reference Include="ImageResizer.Storage">
+      <HintPath>..\packages\ImageResizer.Storage.4.0.4\lib\net45\ImageResizer.Storage.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Owin, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Owin.3.0.1\lib\net45\Microsoft.Owin.dll</HintPath>
@@ -195,6 +204,8 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Account\Web.config" />
     <Content Include="Modules\PlayerManagement\PlayerManagement.master" />
+    <Content Include="Content\Web.config" />
+    <None Include="Properties\PublishProfiles\Stage.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -240,6 +251,7 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
     <Content Include="Site.Mobile.Master" />
     <Content Include="SiteNotLoggedIn.Master" />
+    <Content Include="Scripts\Web.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -296,6 +308,7 @@
     <Compile Include="Modules\UserManagement\Manage.aspx.designer.cs">
       <DependentUpon>Manage.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Controllers\PlayerPassesController.cs" />
     <Compile Include="Repositories\ClubManagementRepositories.cs" />
     <Compile Include="Controllers\ClubsController.cs" />
     <Compile Include="Controllers\Partials\ScopeAssignmentsController.Partial.cs" />

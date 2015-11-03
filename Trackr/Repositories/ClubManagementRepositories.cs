@@ -15,6 +15,11 @@ namespace Trackr
 	
     }
 
+    public partial class PlayerPassRepository : OpenAccessBaseRepository<TrackrModels.PlayerPass, TrackrModels.ClubManagement>
+    {
+
+    }
+
 	public partial class PlayerRepository : OpenAccessBaseRepository<TrackrModels.Player, TrackrModels.ClubManagement>
     {
 	

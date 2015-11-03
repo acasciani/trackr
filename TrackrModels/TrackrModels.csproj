@@ -86,6 +86,9 @@
     <Compile Include="Player.generated.cs">
       <DependentUpon>ClubManagement.rlinq</DependentUpon>
     </Compile>
+    <Compile Include="PlayerPass.generated.cs">
+      <DependentUpon>ClubManagement.rlinq</DependentUpon>
+    </Compile>
     <Compile Include="Program.generated.cs">
       <DependentUpon>ClubManagement.rlinq</DependentUpon>
     </Compile>

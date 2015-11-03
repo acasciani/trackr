@@ -89,8 +89,30 @@
             </div>
         </asp:WizardStep>
 
-        <asp:WizardStep runat="server" ID="Step2_Picture" StepType="Step" Title="Picture">
-            Player pass picture support coming soon.
+        <asp:WizardStep runat="server" ID="Step2_Picture" StepType="Step" Title="Pass Photo">
+            <div class="form-horizontal">
+                <div class="form-group">
+                    <div class="col-sm-12"><strong>Select a photo for the player's pass.</strong></div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-sm-6">
+                        <asp:FileUpload runat="server" ID="uploadPlayerPass" AllowMultiple="false" />
+                    </div>
+                    <div class="col-sm-6 text-right">
+                        <asp:LinkButton runat="server" ID="lnkUpload" OnClick="btnUpload_Click">
+                            <i class="glyphicon glyphicon-upload"></i> Preview Photo
+                        </asp:LinkButton>
+                    </div>
+                </div>
+
+                <div class="form-group" runat="server" id="divPreview" visible="false">
+                    <div class="col-sm-12 text-center">Your preview is below. If you are satisfied with the photo, click "Save & Continue".</div>
+                    <div class="col-sm-12 text-center">
+                        <asp:Image runat="server" ID="imgUploadPreview" />
+                    </div>
+                </div>
+            </div>
         </asp:WizardStep>
 
         <asp:WizardStep runat="server" ID="Step3_Teams" StepType="Finish" Title="Teams">

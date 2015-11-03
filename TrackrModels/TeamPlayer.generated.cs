@@ -50,42 +50,16 @@ namespace TrackrModels
 			}
 		}
 		
-		private int _playerID;
-		public virtual int PlayerID
+		private int _playerPassID;
+		public virtual int PlayerPassID
 		{
 			get
 			{
-				return this._playerID;
+				return this._playerPassID;
 			}
 			set
 			{
-				this._playerID = value;
-			}
-		}
-		
-		private string _passID;
-		public virtual string PassID
-		{
-			get
-			{
-				return this._passID;
-			}
-			set
-			{
-				this._passID = value;
-			}
-		}
-		
-		private byte[] _picture;
-		public virtual byte[] Picture
-		{
-			get
-			{
-				return this._picture;
-			}
-			set
-			{
-				this._picture = value;
+				this._playerPassID = value;
 			}
 		}
 		
@@ -115,16 +89,16 @@ namespace TrackrModels
 			}
 		}
 		
-		private Player _player;
-		public virtual Player Player
+		private PlayerPass _playerPass;
+		public virtual PlayerPass PlayerPass
 		{
 			get
 			{
-				return this._player;
+				return this._playerPass;
 			}
 			set
 			{
-				this._player = value;
+				this._playerPass = value;
 			}
 		}
 		

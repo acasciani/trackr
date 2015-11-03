@@ -121,6 +121,42 @@ namespace Trackr.Source.Wizards {
         protected global::System.Web.UI.WebControls.WizardStep Step2_Picture;
         
         /// <summary>
+        /// uploadPlayerPass control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.FileUpload uploadPlayerPass;
+        
+        /// <summary>
+        /// lnkUpload control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton lnkUpload;
+        
+        /// <summary>
+        /// divPreview control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divPreview;
+        
+        /// <summary>
+        /// imgUploadPreview control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Image imgUploadPreview;
+        
+        /// <summary>
         /// Step3_Teams control.
         /// </summary>
         /// <remarks>

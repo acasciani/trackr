@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Http;
+using Telerik.OpenAccess.FetchOptimization;
 using TrackrModels;
 
 namespace Trackr
@@ -11,7 +12,7 @@ namespace Trackr
     {
         [Route("api/WebUsers/GetScoped/{UserID}/{permission}")]
         [HttpGet]
-        public List<WebUser> GetScopedEntities(int UserID, string permission)
+        public List<WebUser> GetScopedEntities(int UserID, string permission, FetchStrategy fetchStrategy = null)
         {
             ScopeController sc = new ScopeController();
             var assignments = sc.GetScopeAssignments(UserID, permission);
@@ -19,7 +20,7 @@ namespace Trackr
             List<WebUser> users = new List<WebUser>();
             foreach (ScopeAssignment assignment in assignments)
             {
-                users.AddRange(GetScopedEntities(assignment));
+                users.AddRange(GetScopedEntities(assignment, fetchStrategy));
             }
 
             return users;
@@ -39,7 +40,7 @@ namespace Trackr
             return ids;
         }
 
-        public WebUser GetScopedEntity(int UserID, string permission, int entityID)
+        public WebUser GetScopedEntity(int UserID, string permission, int entityID, FetchStrategy fetchStrategy = null)
         {
             ScopeController sc = new ScopeController();
             var assignments = sc.GetScopeAssignments(UserID, permission);
@@ -48,7 +49,14 @@ namespace Trackr
             {
                 if (GetScopedIDs(assignment).Contains(entityID))
                 {
-                    return Get(entityID);
+                    if (fetchStrategy == null)
+                    {
+                        return Get(entityID);
+                    }
+                    else
+                    {
+                        return GetWhere(i => i.UserID == entityID, fetchStrategy).First();
+                    }
                 }
             }
 
@@ -87,10 +95,18 @@ namespace Trackr
             return userIDs;
         }
 
-        private IQueryable<WebUser> GetScopedEntities(ScopeAssignment scopeAssignment)
+        private IQueryable<WebUser> GetScopedEntities(ScopeAssignment scopeAssignment, FetchStrategy fetchStrategy = null)
         {
             List<int> scopedIDs = GetScopedIDs(scopeAssignment);
-            return Get().Where(i => scopedIDs.Contains(i.UserID));
+
+            if (fetchStrategy == null)
+            {
+                return GetWhere(i => scopedIDs.Contains(i.UserID));
+            }
+            else
+            {
+                return GetWhere(i => scopedIDs.Contains(i.UserID), fetchStrategy);
+            }
         }
 
         /// <summary>
