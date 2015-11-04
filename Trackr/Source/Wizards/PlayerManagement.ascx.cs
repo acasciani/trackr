@@ -11,10 +11,15 @@ namespace Trackr.Source.Wizards
 {
     public partial class PlayerManagement : WizardBase<int>
     {
-        private byte[] PlayerPicture
+        private byte[] OldPlayerPicture
         {
-            get { return Session["PlayerPicture"] as byte[]; }
-            set { Session["PlayerPicture"] = value; }
+            get { return Session["OldPlayerPicture"] as byte[]; }
+            set { Session["OldPlayerPicture"] = value; }
+        }
+        private byte[] NewPlayerPicture
+        {
+            get { return Session["NewPlayerPicture"] as byte[]; }
+            set { Session["NewPlayerPicture"] = value; }
         }
         private List<PlayerPass> PlayerPasses
         {
@@ -78,7 +83,8 @@ namespace Trackr.Source.Wizards
 
         private void Populate_Create()
         {
-            PlayerPicture = null;
+            OldPlayerPicture = null;
+            NewPlayerPicture = null;
         }
 
         private void Populate_Edit()
@@ -154,10 +160,10 @@ namespace Trackr.Source.Wizards
             }
         }
 
-        protected void validatorDOBParses_ServerValidate(object source, ServerValidateEventArgs args)
+        protected void validatorDateTimeParses_ServerValidate(object source, ServerValidateEventArgs args)
         {
-            DateTime dob;
-            args.IsValid = DateTime.TryParse(args.Value, out dob);
+            DateTime date;
+            args.IsValid = DateTime.TryParse(args.Value, out date) && new DateTime(1900, 1, 1) <= date && date <= new DateTime(2200, 1, 1);
         }
 
 
@@ -194,15 +200,26 @@ namespace Trackr.Source.Wizards
         #region Pass Administration
         private void ClearPlayerPassForm()
         {
-            PlayerPicture = null;
+            OldPlayerPicture = null;
+            NewPlayerPicture = null;
             txtPassExpires.Text = "";
+            txtPassNumber.Text = "";
             divPreview.Visible = false;
             pnlAddEditPass.Visible = false;
+            txtPassExpires.ReadOnly = false;
+            txtPassNumber.ReadOnly = false;
+            pnlPhotoUpload.Visible = true;
+            validatorPlayerPassExpiresDuplicate.Enabled = true;
+            validatorPlayerPassExpiresRequired.Enabled = true;
+            validatorPlayerPassExpiresValid.Enabled = true;
         }
 
         private void SetPreviewImage(byte[] data)
         {
-            imgUploadPreview.ImageUrl = "data:image/png;base64," + Convert.ToBase64String(data);
+            if (data != null && data.Length > 0)
+            {
+                imgUploadPreview.ImageUrl = "data:image/jpeg;base64," + Convert.ToBase64String(data);
+            }
             divPreview.Visible = data != null && data.Length > 0;
         }
 
@@ -212,24 +229,22 @@ namespace Trackr.Source.Wizards
 
             if (array != null)
             {
-                PlayerPicture = array;
+                NewPlayerPicture = array;
                 SetPreviewImage(array);
             }
         }
 
         protected void lnkReloadImage_Click(object sender, EventArgs e)
         {
-            if (PlayerPicture != null)
-            {
-                SetPreviewImage(PlayerPicture);
-            }
+            NewPlayerPicture = OldPlayerPicture;
+            SetPreviewImage(NewPlayerPicture);
         }
 
         public IQueryable gvPlayerPasses_GetData()
         {
             using (PlayerPassesController ppc = new PlayerPassesController())
             {
-                PlayerPasses = ppc.GetWhere(i => i.PlayerID == PrimaryKey.Value).ToList();
+                PlayerPasses = ppc.GetWhere(i => i.PlayerID == PrimaryKey.Value).OrderByDescending(i => i.Expires).ToList();
 
                 return PlayerPasses.Select(i => new
                 {
@@ -237,33 +252,15 @@ namespace Trackr.Source.Wizards
                     PassNumber = i.PassNumber,
                     PlayerPassID = i.PlayerPassID,
                     Editable = DateTime.Today < i.Expires,
-                }).OrderByDescending(i => i.Expiration).AsQueryable();
+                }).AsQueryable();
             }
         }
 
         protected void gvPlayerPasses_RowEditing(object sender, GridViewEditEventArgs e)
         {
-            using (PlayerPassesController ppc = new PlayerPassesController())
-            {
-                FetchStrategy fetch = new FetchStrategy();
-                fetch.LoadWith<PlayerPass>(i => i.Photo);
-
-                PlayerPass pass = ppc.GetWhere(i => i.PlayerPassID == PlayerPasses[e.NewEditIndex].PlayerPassID, fetch).First();
-                ClearPlayerPassForm();
-                gvPlayerPasses.EditIndex = e.NewEditIndex;
-                gvPlayerPasses.DataBind();
-
-                // populate
-                txtPassExpires.Text = pass.Expires.ToString("yyyy-MM-dd");
-                PlayerPicture = pass.Photo;
-
-                if (pass.Photo != null && pass.Photo.Count() > 0)
-                {
-                    SetPreviewImage(pass.Photo);
-                }
-
-                pnlAddEditPass.Visible = true;
-            }
+            Populate_PlayerPassEdit(PlayerPasses[e.NewEditIndex].PlayerPassID);
+            gvPlayerPasses.EditIndex = e.NewEditIndex;
+            gvPlayerPasses.DataBind();
         }
 
         protected void gvPlayerPasses_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
@@ -278,12 +275,13 @@ namespace Trackr.Source.Wizards
             {
                 PlayerPass playerPass = playerPassID.HasValue ? ppc.Get(playerPassID.Value) : new PlayerPass();
 
-                playerPass.Photo = PlayerPicture;
-                playerPass.PlayerID = PrimaryKey.Value;
+                playerPass.Photo = NewPlayerPicture == null || NewPlayerPicture.Length == 0 ? null : NewPlayerPicture;
+                playerPass.Expires = DateTime.Parse(txtPassExpires.Text);
+                playerPass.PassNumber = string.IsNullOrWhiteSpace(txtPassNumber.Text) ? null : txtPassNumber.Text;
 
                 if (!playerPassID.HasValue)
                 {
-                    playerPass.Expires = DateTime.Parse(txtPassExpires.Text);
+                    playerPass.PlayerID = PrimaryKey.Value;
 
                     PlayerPass inserted = ppc.AddNew(playerPass);
                     playerPassID = inserted.PlayerPassID;
@@ -295,11 +293,98 @@ namespace Trackr.Source.Wizards
                     AlertBox.SetStatus("Successfully saved existing player pass.");
                 }
 
-                PlayerPicture = null;
+                NewPlayerPicture = null;
+                OldPlayerPicture = null;
                 pnlAddEditPass.Visible = false;
+                gvPlayerPasses.EditIndex = -1;
+                gvPlayerPasses.DataBind();
             }
         }
+
+        private void Populate_PlayerPassEdit(int playerPassID)
+        {
+            using (PlayerPassesController ppc = new PlayerPassesController())
+            {
+                FetchStrategy fetch = new FetchStrategy();
+                fetch.LoadWith<PlayerPass>(i => i.Photo);
+
+                PlayerPass pass = ppc.GetWhere(i => i.PlayerPassID == playerPassID, fetch).First();
+                ClearPlayerPassForm();
+
+                // populate
+                txtPassExpires.Text = pass.Expires.ToString("yyyy-MM-dd");
+                OldPlayerPicture = pass.Photo;
+                NewPlayerPicture = pass.Photo;
+
+                if (pass.Photo != null && pass.Photo.Count() > 0)
+                {
+                    SetPreviewImage(pass.Photo);
+                }
+
+                pnlAddEditPass.Visible = true;
+            }
+        }
+
+        protected void lnkSavePlayerPass_Click(object sender, EventArgs e)
+        {
+            if (!Page.IsValid)
+            {
+                return;
+            }
+
+            int? playerPassID = gvPlayerPasses.EditIndex != -1 ? PlayerPasses[gvPlayerPasses.EditIndex].PlayerPassID : (int?)null;
+            SavePlayerPass(playerPassID);
+        }
+
+        protected void lnkAddPlayerPass_Click(object sender, EventArgs e)
+        {
+            ClearPlayerPassForm();
+            pnlAddEditPass.Visible = true;
+            gvPlayerPasses.EditIndex = -1;
+            gvPlayerPasses.DataBind();
+        }
+
+        protected void lnkViewPlayerPass_Click(object sender, EventArgs e)
+        {
+            int playerPassID;
+            if(int.TryParse(((LinkButton)sender).CommandArgument, out playerPassID)){
+                Populate_PlayerPassEdit(playerPassID);
+                txtPassExpires.ReadOnly = true;
+                txtPassNumber.ReadOnly = true;
+                pnlPhotoUpload.Visible = false;
+                validatorPlayerPassExpiresDuplicate.Enabled = false;
+                validatorPlayerPassExpiresRequired.Enabled = false;
+                validatorPlayerPassExpiresValid.Enabled = false;
+            }
+        }
+
+        protected void validatorPlayerPassExpiresDuplicate_ServerValidate(object source, ServerValidateEventArgs args)
+        {
+            DateTime exp;
+            if (DateTime.TryParse(args.Value, out exp))
+            {
+                args.IsValid = PlayerPasses.Count(i => i.PlayerID == PrimaryKey.Value && i.Expires == exp) == 0;
+            }
+        }
+
         #endregion
 
+        // The id parameter name should match the DataKeyNames value set on the control
+        public void gvPlayerPasses_DeleteItem(int? PlayerPassID)
+        {
+            ClearPlayerPassForm();
+
+            if (!PlayerPassID.HasValue)
+            {
+                return;
+            }
+            using (PlayerPassesController ppc = new PlayerPassesController())
+            {
+                ppc.Delete(PlayerPassID.Value);
+                AlertBox.SetStatus("Successfully deleted player pass and all team assignments with that player pass.");
+            }
+
+            gvPlayerPasses.DataBind();
+        }
     }
 }

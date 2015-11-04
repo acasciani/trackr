@@ -223,8 +223,8 @@
         <orm:field name="_transactions" property="Transactions" behavior="readwrite" uniqueId="122a83c1-04f6-4f33-b753-3b5e1abc181b" type="TrackrModels.Transaction">
           <orm:collection element-class="TrackrModels.Transaction" inverse-field="_player" order-by="" uniqueId="17d53c36-6bbf-4829-b016-49606933865a" />
         </orm:field>
-        <orm:field name="_playerPasses" property="PlayerPasses" behavior="readwrite" uniqueId="2d7c350e-7531-41e1-97d3-cb7cf2162daa" type="TrackrModels.PlayerPass">
-          <orm:collection element-class="TrackrModels.PlayerPass" inverse-field="_player" order-by="" uniqueId="74c4dc34-7df3-42a3-930f-8f4c12703f0d" />
+        <orm:field name="_playerPasses" property="PlayerPasses" behavior="readwrite" uniqueId="876e7733-4f83-4189-8a0a-a626a6760cb1" type="TrackrModels.PlayerPass">
+          <orm:collection element-class="TrackrModels.PlayerPass" inverse-field="_player" order-by="" uniqueId="d000aeef-9556-4d02-9139-260fb79cf2af" />
         </orm:field>
       </orm:class>
       <orm:class name="Club" uniqueId="bbc75fb2-a0dc-4d4c-9c46-3acd3a92fce7">
@@ -270,14 +270,14 @@
         <orm:field name="_playerID" property="PlayerID" behavior="readwrite" uniqueId="bfecd7ce-8e7a-446f-8e29-27b36a79c9a5" type="System.Int32">
           <orm:column name="PlayerID" sql-type="int" nullable="false" length="0" scale="0" ado-type="Int32" />
         </orm:field>
-        <orm:field name="_player" property="Player" behavior="readwrite" uniqueId="68c19f5b-cfae-4fcb-a83d-34fa629555f4" type="TrackrModels.Player">
-          <orm:reference uniqueId="74c4dc34-7df3-42a3-930f-8f4c12703f0d" association-name="PlayerPassHasPlayer">
+        <orm:field name="_player" property="Player" behavior="readwrite" uniqueId="5fdc6d8e-df2a-4e9d-be20-653e0c6062ae" type="TrackrModels.Player">
+          <orm:reference uniqueId="d000aeef-9556-4d02-9139-260fb79cf2af" association-name="PlayerPassHasPlayer">
             <orm:sharedfield name="_playerID" target-class="TrackrModels.Player" target-field="_playerID" />
-            <orm:constraint name="FK_PlayerPasses_Players" delete-action="dbdefaultrule" destination-table="Players" />
+            <orm:constraint name="FK_PlayerPassID_Players" delete-action="dbdefaultrule" destination-table="Players" />
           </orm:reference>
         </orm:field>
-        <orm:field name="_teamPlayers" property="TeamPlayers" behavior="readwrite" uniqueId="78b6c29b-3d7a-456b-a1e4-89c13a986c58" type="TrackrModels.TeamPlayer">
-          <orm:collection element-class="TrackrModels.TeamPlayer" inverse-field="_playerPass" order-by="" uniqueId="d817665e-6fc0-421b-9d2e-72ffa1db1937" />
+        <orm:field name="_teamPlayers" property="TeamPlayers" behavior="readwrite" uniqueId="78b6c29b-3d7a-456b-a1e4-89c13a986c58" type="TrackrModels.TeamPlayer" dependent="true">
+          <orm:collection element-class="TrackrModels.TeamPlayer" inverse-field="_playerPass" managed="true" order-by="" uniqueId="d817665e-6fc0-421b-9d2e-72ffa1db1937" />
         </orm:field>
         <orm:index name="UniquePlayerPerYear" unique="true">
           <orm:columnMapping>
@@ -417,7 +417,7 @@
             <orm:column name="Expires" sql-type="date" nullable="false" length="0" scale="0" ado-type="Date" />
           </orm:columnMapping>
         </orm:index>
-        <orm:constraint name="FK_PlayerPasses_Players" delete-action="dbdefaultrule" destination-table="Players">
+        <orm:constraint name="FK_PlayerPassID_Players" delete-action="dbdefaultrule" destination-table="Players">
           <orm:column name="PlayerID" sql-type="int" nullable="false" length="0" scale="0" ado-type="Int32" />
         </orm:constraint>
       </orm:table>
@@ -663,8 +663,8 @@
         <classHasNavigationalProperties Id="67f2ba34-a527-429c-80d2-ab38dc7961ab">
           <NavigationalProperty Id="122a83c1-04f6-4f33-b753-3b5e1abc181b" name="Transactions" type="IList&lt;Transaction&gt;" label="Transactions : IList&lt;Transaction&gt;" nullable="true" kind="Persistent" fieldName="_transactions" isDependent="false" isManaged="false" />
         </classHasNavigationalProperties>
-        <classHasNavigationalProperties Id="b0421cca-1d07-4b6b-a7fd-d27697990fc7">
-          <NavigationalProperty Id="2d7c350e-7531-41e1-97d3-cb7cf2162daa" name="PlayerPasses" type="IList&lt;PlayerPass&gt;" label="PlayerPasses : IList&lt;PlayerPass&gt;" nullable="true" kind="Persistent" fieldName="_playerPasses" isDependent="false" isManaged="false" />
+        <classHasNavigationalProperties Id="eca7f0d0-a384-4ee7-a370-869803dd00c5">
+          <NavigationalProperty Id="876e7733-4f83-4189-8a0a-a626a6760cb1" name="PlayerPasses" type="IList&lt;PlayerPass&gt;" label="PlayerPasses : IList&lt;PlayerPass&gt;" nullable="true" kind="Persistent" fieldName="_playerPasses" isDependent="false" isManaged="false" />
         </classHasNavigationalProperties>
       </navigationalProperties>
     </DomainClass>
@@ -684,26 +684,26 @@
       <Property Id="c415f7f8-f558-495b-a9e4-b3538de8a415" name="Photo" type="Byte[]" label="Photo : Byte[]" kind="Persistent" fieldName="_photo" />
       <Property Id="bfecd7ce-8e7a-446f-8e29-27b36a79c9a5" name="PlayerID" type="Int32" label="PlayerID : Int32" kind="Persistent" fieldName="_playerID" />
       <AssociationTargets>
-        <Association Id="74c4dc34-7df3-42a3-930f-8f4c12703f0d" SourceMultiplicity="One" name="PlayerPassHasPlayer">
+        <Association Id="d000aeef-9556-4d02-9139-260fb79cf2af" SourceMultiplicity="One" name="PlayerPassHasPlayer">
           <DomainClassMoniker name="/ClubManagement/Player" />
           <targetNavigationalProperty>
-            <associationDefinesTargetProperty Id="0bde0330-7a2b-44bf-a4ad-153d631aa9b4">
+            <associationDefinesTargetProperty Id="9d20ca18-8d46-4eb2-8848-264725860038">
               <NavigationalPropertyMoniker name="/ClubManagement/Player/PlayerPasses" />
             </associationDefinesTargetProperty>
           </targetNavigationalProperty>
           <sourceNavigationalProperty>
-            <associationDefinesSourceProperty Id="0a49e054-4f0a-468d-a8a4-8be6829013ef">
+            <associationDefinesSourceProperty Id="d4f5d1c0-3ae5-4219-afbd-9456519eac75">
               <NavigationalPropertyMoniker name="/ClubManagement/PlayerPass/Player" />
             </associationDefinesSourceProperty>
           </sourceNavigationalProperty>
         </Association>
       </AssociationTargets>
       <navigationalProperties>
-        <classHasNavigationalProperties Id="34a07d64-e6bb-4951-8298-0ad1014203c4">
-          <NavigationalProperty Id="68c19f5b-cfae-4fcb-a83d-34fa629555f4" name="Player" type="Player" label="Player : Player" nullable="true" kind="Persistent" fieldName="_player" isDependent="false" isManaged="false" />
-        </classHasNavigationalProperties>
         <classHasNavigationalProperties Id="bd1f4e71-f865-4008-b2a2-38808971f362">
-          <NavigationalProperty Id="78b6c29b-3d7a-456b-a1e4-89c13a986c58" name="TeamPlayers" type="IList&lt;TeamPlayer&gt;" label="TeamPlayers : IList&lt;TeamPlayer&gt;" nullable="true" kind="Persistent" fieldName="_teamPlayers" isDependent="false" isManaged="false" />
+          <NavigationalProperty Id="78b6c29b-3d7a-456b-a1e4-89c13a986c58" name="TeamPlayers" type="IList&lt;TeamPlayer&gt;" label="TeamPlayers : IList&lt;TeamPlayer&gt;" nullable="true" kind="Persistent" fieldName="_teamPlayers" isDependent="true" isManaged="true" />
+        </classHasNavigationalProperties>
+        <classHasNavigationalProperties Id="8d3f3c53-7898-48e8-9138-39f0acd92009">
+          <NavigationalProperty Id="5fdc6d8e-df2a-4e9d-be20-653e0c6062ae" name="Player" type="Player" label="Player : Player" nullable="true" kind="Persistent" fieldName="_player" isDependent="false" isManaged="false" />
         </classHasNavigationalProperties>
       </navigationalProperties>
     </DomainClass>
@@ -745,7 +745,7 @@
           <NavigationalProperty Id="ee6d90d0-0553-43a8-8e33-4fab5c6e741f" name="Team" type="Team" label="Team : Team" nullable="true" kind="Persistent" fieldName="_team" isDependent="false" isManaged="false" />
         </classHasNavigationalProperties>
         <classHasNavigationalProperties Id="7398af11-7293-49df-b58c-f97fc9805a70">
-          <NavigationalProperty Id="a87a4db3-77d9-4288-b329-925cf38a084f" name="PlayerPass" type="PlayerPass" label="PlayerPass : PlayerPass" nullable="true" kind="Persistent" fieldName="_playerPass" isDependent="false" isManaged="false" />
+          <NavigationalProperty Id="a87a4db3-77d9-4288-b329-925cf38a084f" name="PlayerPass" type="PlayerPass" label="PlayerPass : PlayerPass" nullable="true" kind="Persistent" fieldName="_playerPass" isDependent="false" isManaged="true" />
         </classHasNavigationalProperties>
       </navigationalProperties>
     </DomainClass>

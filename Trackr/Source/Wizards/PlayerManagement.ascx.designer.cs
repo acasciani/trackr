@@ -130,6 +130,15 @@ namespace Trackr.Source.Wizards {
         protected global::System.Web.UI.WebControls.GridView gvPlayerPasses;
         
         /// <summary>
+        /// lnkAddPlayerPass control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton lnkAddPlayerPass;
+        
+        /// <summary>
         /// pnlAddEditPass control.
         /// </summary>
         /// <remarks>
@@ -155,6 +164,42 @@ namespace Trackr.Source.Wizards {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.CustomValidator validatorPlayerPassExpiresValid;
+        
+        /// <summary>
+        /// validatorPlayerPassExpiresDuplicate control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CustomValidator validatorPlayerPassExpiresDuplicate;
+        
+        /// <summary>
+        /// validatorPlayerPassExpiresRequired control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator validatorPlayerPassExpiresRequired;
+        
+        /// <summary>
+        /// txtPassNumber control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtPassNumber;
+        
+        /// <summary>
+        /// pnlPhotoUpload control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel pnlPhotoUpload;
         
         /// <summary>
         /// uploadPlayerPass control.
