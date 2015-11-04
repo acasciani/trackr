@@ -172,34 +172,77 @@
             </asp:Panel>
         </asp:WizardStep>
 
-        <asp:WizardStep runat="server" ID="Step3_Teams" StepType="Finish" Title="Teams">
-            <asp:GridView runat="server" ID="gvTeamAssignments" AutoGenerateColumns="false" SelectMethod="gvTeamAssignments_GetData" EmptyDataText="This player is not assigned to any teams.">
-                <Columns>
-                    <asp:BoundField DataField="Season" HeaderText="Season" />
-                    
-                    <asp:TemplateField HeaderText="Team">
-                        <ItemTemplate>
-                            <%# Eval("TeamName") %> (<%# Eval("ProgramName") %>)
-                        </ItemTemplate>
-                    </asp:TemplateField>
 
-                    <asp:TemplateField HeaderText="Is Secondary">
-                        <ItemTemplate>
-                            <%# (bool)Eval("IsSecondary") ? "Yes" : "" %>
-                        </ItemTemplate>
-                    </asp:TemplateField>
+        <asp:WizardStep runat="server" ID="Step3_Teams" StepType="Finish" Title="Teams">
+            <asp:GridView runat="server" ID="gvTeamAssignments" AutoGenerateColumns="false" SelectMethod="gvTeamAssignments_GetData" EmptyDataText="This player is not assigned to any teams." CssClass="table table-striped table-hover" 
+                OnRowEditing="gvTeamAssignments_RowEditing" OnRowCancelingEdit="gvTeamAssignments_RowCancelingEdit" DeleteMethod="gvTeamAssignmentss_DeleteItem" DataKeyNames="TeamPlayerID">
+                <Columns>
+                    <asp:BoundField DataField="Season" HeaderText="Season" ReadOnly="true" />
+                    <asp:BoundField DataField="ProgramName" HeaderText="Program Name" ReadOnly="true" />
+                    <asp:BoundField DataField="TeamName" HeaderText="Team Name" ReadOnly="true" />
+                    <asp:BoundField DataField="PlayerPassNumber" HeaderText="Pass #" ReadOnly="true" />
 
                     <asp:TemplateField>
                         <ItemTemplate>
-                            <asp:LinkButton runat="server" ID="lnkRemoveFromTeam" Visible='<%# Eval("dasf") %>' ToolTip="Remove from team">D</asp:LinkButton>
+                            <asp:LinkButton runat="server" ID="lnkRemoveTeamPlayer" Visible='<%# (bool)Eval("Editable") %>' CommandName="Delete" ToolTip="Remove team assignment" CssClass="glyphicon glyphicon-trash" CausesValidation="false"></asp:LinkButton> <span runat="server" visible='<%# (bool)Eval("Editable") %>'>&nbsp;&nbsp;</span>
+                            <asp:LinkButton runat="server" ID="lnkEditTeamPlayer" Visible='<%# (bool)Eval("Editable") %>' CommandName="Edit" ToolTip="Edit team assignment" CssClass="glyphicon glyphicon-edit" CausesValidation="false"></asp:LinkButton>
                         </ItemTemplate>
                     </asp:TemplateField>
                 </Columns>
             </asp:GridView>
 
-            <asp:Panel runat="server" ID="pnlTeamAssignment" Visible="false">
-                <hr />
+            <div class="row">
+                <div class="col-sm-12">
+                    <asp:LinkButton runat="server" ID="lnkAddTeamPlayer" OnClick="lnkAddTeamPlayer_Click" CausesValidation="false">
+                        <i class="glyphicon glyphicon-plus-sign"></i> Add Team Assignment
+                    </asp:LinkButton>
+                </div>
+            </div>
 
+            <asp:Panel runat="server" ID="pnlAddEditTeamPlayer" Visible="false">
+                <div class="well">
+                    <div class="row">
+                            <div class="form-group row">
+                                <label class="col-sm-12 control-label" for="<%=txtPassExpires.ClientID %>">Pass Expires On</label>
+                                <div class="col-sm-12">
+                                    <asp:TextBox runat="server" ID="TextBox1" TextMode="Date" CssClass="form-control" MaxLength="30" />
+                                    <asp:CustomValidator runat="server" ID="CustomValidator1" ControlToValidate="txtPassExpires" CssClass="text-danger" ErrorMessage="The expiration date must be entered in the format: MM/DD/YYYY and the expiration date must be greater than or equal to January 1, 1900 and less than or equal to January 1, 2200." OnServerValidate="validatorDateTimeParses_ServerValidate" Display="Dynamic" />
+                                    <asp:CustomValidator runat="server" ID="CustomValidator2" ControlToValidate="txtPassExpires" CssClass="text-danger" ErrorMessage="There is already a player pass for this player with the specified expiration date." OnServerValidate="validatorPlayerPassExpiresDuplicate_ServerValidate" Display="Dynamic" />
+                                    <asp:RequiredFieldValidator Display="Dynamic" runat="server" ID="RequiredFieldValidator1" ControlToValidate="txtPassExpires" CssClass="text-danger" ErrorMessage="The player pass expiration date is required." />
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="col-sm-12 control-label" for="<%=txtPassNumber.ClientID %>">Pass Number</label>
+                                <div class="col-sm-12">
+                                    <asp:TextBox runat="server" ID="TextBox2" CssClass="form-control" MaxLength="50" />
+                                </div>
+                            </div>
+
+                            <asp:Panel runat="server" ID="Panel2">
+                                <div class="form-group row" runat="server">
+                                    <label class="col-sm-12 control-label" for="<%=uploadPlayerPass.ClientID %>">Player Pass Photo</label>
+                                    <div class="col-sm-12">
+                                        <asp:FileUpload runat="server" ID="FileUpload1" AllowMultiple="false" />
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <div class="col-sm-12">
+                                        <p>Once you select the player's photo, click <strong>Preview Photo</strong>. <br />
+                                            Once you are satisfied with the preview, click <strong>Save Player Pass</strong>.<br />
+                                            <strong>Note:</strong> If you do not choose a file and click <strong>Preview Photo</strong>, then the previous image will be removed.
+                                        </p>                                    
+                                    </div>
+                                
+                                    <div class="col-sm-12">
+                                        <asp:LinkButton runat="server" ID="LinkButton2" OnClick="btnUpload_Click" CausesValidation="false"><i class="glyphicon glyphicon-upload"></i> Preview Photo</asp:LinkButton><br />
+                                        <asp:LinkButton runat="server" ID="LinkButton3" OnClick="lnkReloadImage_Click" CausesValidation="false"><i class="glyphicon glyphicon-refresh"></i> Reload Existing</asp:LinkButton><br />
+                                        <asp:LinkButton runat="server" ID="LinkButton4" CausesValidation="true" OnClick="lnkSavePlayerPass_Click"><i class="glyphicon glyphicon-save"></i> Save Player Pass</asp:LinkButton>
+                                    </div>
+                                </div>
+                    </div>
+                </div>
             </asp:Panel>
         </asp:WizardStep>
 
