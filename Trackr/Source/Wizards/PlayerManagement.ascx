@@ -201,46 +201,33 @@
 
             <asp:Panel runat="server" ID="pnlAddEditTeamPlayer" Visible="false">
                 <div class="well">
-                    <div class="row">
-                            <div class="form-group row">
-                                <label class="col-sm-12 control-label" for="<%=txtPassExpires.ClientID %>">Pass Expires On</label>
-                                <div class="col-sm-12">
-                                    <asp:TextBox runat="server" ID="TextBox1" TextMode="Date" CssClass="form-control" MaxLength="30" />
-                                    <asp:CustomValidator runat="server" ID="CustomValidator1" ControlToValidate="txtPassExpires" CssClass="text-danger" ErrorMessage="The expiration date must be entered in the format: MM/DD/YYYY and the expiration date must be greater than or equal to January 1, 1900 and less than or equal to January 1, 2200." OnServerValidate="validatorDateTimeParses_ServerValidate" Display="Dynamic" />
-                                    <asp:CustomValidator runat="server" ID="CustomValidator2" ControlToValidate="txtPassExpires" CssClass="text-danger" ErrorMessage="There is already a player pass for this player with the specified expiration date." OnServerValidate="validatorPlayerPassExpiresDuplicate_ServerValidate" Display="Dynamic" />
-                                    <asp:RequiredFieldValidator Display="Dynamic" runat="server" ID="RequiredFieldValidator1" ControlToValidate="txtPassExpires" CssClass="text-danger" ErrorMessage="The player pass expiration date is required." />
-                                </div>
-                            </div>
+                    <div class="form-group row">
+                        <label class="col-sm-12 control-label" for="<%=txtPassExpires.ClientID %>">Pass Expires On</label>
+                        <div class="col-sm-12">
+                            <asp:DropDownList runat="server" ID="ddl"
+                            <asp:TextBox runat="server" ID="TextBox1" TextMode="Date" CssClass="form-control" MaxLength="30" />
+                        </div>
+                    </div>
 
-                            <div class="form-group row">
-                                <label class="col-sm-12 control-label" for="<%=txtPassNumber.ClientID %>">Pass Number</label>
-                                <div class="col-sm-12">
-                                    <asp:TextBox runat="server" ID="TextBox2" CssClass="form-control" MaxLength="50" />
-                                </div>
-                            </div>
+                    <div class="form-group row">
+                        <label class="col-sm-12 control-label" for="<%=txtPassNumber.ClientID %>">Pass Number</label>
+                        <div class="col-sm-12">
+                            <asp:TextBox runat="server" ID="TextBox2" CssClass="form-control" MaxLength="50" />
+                        </div>
+                    </div>
 
-                            <asp:Panel runat="server" ID="Panel2">
-                                <div class="form-group row" runat="server">
-                                    <label class="col-sm-12 control-label" for="<%=uploadPlayerPass.ClientID %>">Player Pass Photo</label>
-                                    <div class="col-sm-12">
-                                        <asp:FileUpload runat="server" ID="FileUpload1" AllowMultiple="false" />
-                                    </div>
-                                </div>
+                    <div class="form-group row">
+                        <label class="col-sm-12 control-label" for="<%=txtPassNumber.ClientID %>">Pass Number</label>
+                        <div class="col-sm-12">
+                            <asp:TextBox runat="server" ID="TextBox3" CssClass="form-control" MaxLength="50" />
+                        </div>
+                    </div>
 
-                                <div class="form-group row">
-                                    <div class="col-sm-12">
-                                        <p>Once you select the player's photo, click <strong>Preview Photo</strong>. <br />
-                                            Once you are satisfied with the preview, click <strong>Save Player Pass</strong>.<br />
-                                            <strong>Note:</strong> If you do not choose a file and click <strong>Preview Photo</strong>, then the previous image will be removed.
-                                        </p>                                    
-                                    </div>
-                                
-                                    <div class="col-sm-12">
-                                        <asp:LinkButton runat="server" ID="LinkButton2" OnClick="btnUpload_Click" CausesValidation="false"><i class="glyphicon glyphicon-upload"></i> Preview Photo</asp:LinkButton><br />
-                                        <asp:LinkButton runat="server" ID="LinkButton3" OnClick="lnkReloadImage_Click" CausesValidation="false"><i class="glyphicon glyphicon-refresh"></i> Reload Existing</asp:LinkButton><br />
-                                        <asp:LinkButton runat="server" ID="LinkButton4" CausesValidation="true" OnClick="lnkSavePlayerPass_Click"><i class="glyphicon glyphicon-save"></i> Save Player Pass</asp:LinkButton>
-                                    </div>
-                                </div>
+                    <div class="form-group row">
+                        <label class="col-sm-12 control-label" for="<%=txtPassNumber.ClientID %>">Pass Number</label>
+                        <div class="col-sm-12">
+                            <asp:TextBox runat="server" ID="TextBox4" CssClass="form-control" MaxLength="50" />
+                        </div>
                     </div>
                 </div>
             </asp:Panel>

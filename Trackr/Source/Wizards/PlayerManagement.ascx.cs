@@ -210,27 +210,26 @@ namespace Trackr.Source.Wizards
 
         protected void gvTeamAssignments_RowEditing(object sender, GridViewEditEventArgs e)
         {
-            Populate_PlayerPassEdit(PlayerPasses[e.NewEditIndex].PlayerPassID);
-            gvPlayerPasses.EditIndex = e.NewEditIndex;
-            gvPlayerPasses.DataBind();
+            Populate_TeamPlayerEdit(TeamPlayers[e.NewEditIndex].TeamPlayerID);
+            gvTeamAssignments.EditIndex = e.NewEditIndex;
+            gvTeamAssignments.DataBind();
         }
 
         protected void gvTeamAssignments_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
         {
-            gvPlayerPasses.EditIndex = -1;
-            gvPlayerPasses.DataBind();
+            gvTeamAssignments.EditIndex = -1;
+            gvTeamAssignments.DataBind();
         }
 
         private void SaveTeamPlayer(int? teamPlayerID)
-        {
-            using (PlayerPassesController ppc = new PlayerPassesController())
+        {/*
+            using (TeamPlayersController tpc = new TeamPlayersController())
             {
-                /*
-                PlayerPass playerPass = playerPassID.HasValue ? ppc.Get(playerPassID.Value) : new PlayerPass();
+                TeamPlayer teamPlayer = teamPlayerID.HasValue ? tpc.Get(teamPlayerID.Value) : new TeamPlayer();
 
-                playerPass.Photo = NewPlayerPicture == null || NewPlayerPicture.Length == 0 ? null : NewPlayerPicture;
-                playerPass.Expires = DateTime.Parse(txtPassExpires.Text);
-                playerPass.PassNumber = string.IsNullOrWhiteSpace(txtPassNumber.Text) ? null : txtPassNumber.Text;
+                teamPlayer.IsSecondary = true;
+                teamPlayer.PlayerPassID = 1;
+                teamPlayer.TeamID = 1;
 
                 if (!playerPassID.HasValue)
                 {
@@ -251,8 +250,7 @@ namespace Trackr.Source.Wizards
                 pnlAddEditPass.Visible = false;
                 gvPlayerPasses.EditIndex = -1;
                 gvPlayerPasses.DataBind();
-                 */
-            }
+            }*/
         }
 
         private void Populate_TeamPlayerEdit(int teamPlayerID)
