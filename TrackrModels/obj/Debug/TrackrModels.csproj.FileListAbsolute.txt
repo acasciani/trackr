@@ -32,6 +32,7 @@ C:\Development\trackr\TrackrModels\bin\Debug\Telerik.OpenAccess.35.Extensions.xm
 C:\Development\trackr\TrackrModels\bin\Debug\Telerik.OpenAccess.Web.xml
 C:\Development\trackr\TrackrModels\obj\Debug\TrackrModels.dll
 C:\Development\trackr\TrackrModels\obj\Debug\TrackrModels.pdb
+C:\Development\trackr\TrackrModels\obj\Debug\TrackrModels.csprojResolveAssemblyReference.cache
 C:\DEV\trackr\TrackrModels\bin\Debug\TrackrModels.dll.config
 C:\DEV\trackr\TrackrModels\bin\Debug\TrackrModels.dll
 C:\DEV\trackr\TrackrModels\bin\Debug\TrackrModels.pdb
@@ -50,4 +51,3 @@ C:\DEV\trackr\TrackrModels\bin\Debug\Telerik.OpenAccess.Web.xml
 C:\DEV\trackr\TrackrModels\obj\Debug\TrackrModels.csprojResolveAssemblyReference.cache
 C:\DEV\trackr\TrackrModels\obj\Debug\TrackrModels.dll
 C:\DEV\trackr\TrackrModels\obj\Debug\TrackrModels.pdb
-C:\Development\trackr\TrackrModels\obj\Debug\TrackrModels.csprojResolveAssemblyReference.cache
